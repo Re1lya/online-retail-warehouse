@@ -1,40 +1,46 @@
 # 在线零售销售分析数仓系统的设计与实现
 
-本项目用真实UCI Online Retail数据完成需求分析、四维星型建模、ODS/DWD/DWS/ADS分层、离线ETL、5项指标和3个中文可视化页面。项目采用四人分工，成员与模块对应关系见下方“团队交接”。
+这是我们《数据仓库》课程的大作业。我们选用 UCI Online Retail 数据集，使用 Python、DuckDB 和 Streamlit 搭建零售交易分析系统，完成数据清洗、维度建模、分层汇总和可视化。
 
-## 先看成果
+系统可以按日期和国家筛选交易数据，查看交易金额趋势，以及商品、客户和国家的交易排行。
 
-- `期末大作业报告.docx`：按老师模板整理的完整报告。
-- `docs/C_REQUIREMENTS.md`：业务需求、指标口径、验收标准。
-- `docs/A_DATA.md`：数据来源、清洗和质量实测。
-- `docs/B_MODEL.md`、`docs/model.svg`：概念/逻辑/物理设计、数据字典与模型图。
-- `docs/D_DEMO.md`：运行与三分钟演示脚本。
-- `data/exports/analysis.json`及CSV：真实分析结果。
-- `data/exports/validation.json`、`test-results.xml`：运行时校验和自动化测试结果。
-- `data/exports/business_caveats.json`：大额交易与取消记录的可追溯案例。
+## 技术方案
+
+| 技术 | 用途 |
+|---|---|
+| Python、pandas、openpyxl | 读取 Excel、处理数据、运行 ETL |
+| DuckDB、SQL | 保存分层数据表，完成关联和汇总 |
+| Streamlit、Plotly | 页面筛选、图表展示和 CSV 下载 |
+| pytest | 检查模型、指标和页面功能 |
+
+数仓采用星型模型，以原始交易明细为事实粒度，关联日期、商品、客户和国家四个维度。数据分为 ODS、STG、DIM、DWD、DWS 和 ADS 层，分别负责原始数据保存、清洗、维度管理、明细存储、汇总和应用查询。
 
 ## 本地运行
 
-建议使用Python 3.12（3.11及以上可尝试）。首次安装需要联网；数据文件和已生成数据库已包含，安装后看板可离线运行。无需安装数据库服务器。
-
-在项目目录打开终端，执行：
+推荐使用 Python 3.12。仓库中包含原始数据和已生成的数据库，安装依赖后即可启动页面。
 
 ```bash
+git clone https://github.com/Re1lya/online-retail-warehouse.git
+cd online-retail-warehouse
 python -m venv .venv
 ```
 
-Windows PowerShell激活：`.venv\Scripts\Activate.ps1`；Windows命令提示符：`.venv\Scripts\activate.bat`；macOS/Linux：`source .venv/bin/activate`。
+激活虚拟环境：
+
+- Windows PowerShell：`.venv\Scripts\Activate.ps1`
+- Windows CMD：`.venv\Scripts\activate.bat`
+- macOS / Linux：`source .venv/bin/activate`
 
 ```bash
 python -m pip install -r requirements.txt
 python -m streamlit run app.py
 ```
 
-打开终端显示的本地地址，通常是 `http://localhost:8501`。看板提供日期、国家筛选及年/月/日切换。关闭终端或按Ctrl+C可停止。
+在浏览器打开终端显示的地址，默认是 `http://localhost:8501`。
 
-## 从原始数据完整重建
+### 重新生成数据库
 
-先关闭看板，再运行：
+关闭页面服务后，在项目目录执行：
 
 ```bash
 python pipeline.py
@@ -42,70 +48,61 @@ python -m pytest -q
 python -m streamlit run app.py
 ```
 
-重建流程：Excel → ODS → STG类型规范 → DIM/DWD → DWS/ADS → 13项运行时校验 → 导出准备 → 数据库替换与结果发布。构建、校验、导出准备失败时保留旧库；多个导出文件与数据库之间不是跨文件事务，发布阶段意外中断后请关闭看板并重新运行流水线。
+`pipeline.py` 会依次完成数据导入、清洗、建模、汇总和校验，并生成数据库及分析结果。
 
-如果原始文件被移走，可从官方重新下载：
+原始文件缺失时，可以运行 `python -m src.download_data` 重新下载。报告中的分析图可通过 `python -m src.export_figures` 生成。
 
-```bash
-python -m src.download_data
-```
+## 页面功能
 
-重绘报告中的分析图（可选）：
+| 页面 | 内容 |
+|---|---|
+| 销售概览 | 五项指标、年/月/日交易趋势 |
+| 商品与业务项目 | 金额 Top 10、记录数量和明细表 |
+| 国家与客户 | 国家交易金额排行、已知客户排行 |
 
-```bash
-python -m src.export_figures
-```
+三个页面共用日期和国家筛选条件，结果可以下载为 CSV。
 
-## 指标口径
+## 数据与指标
 
-数据覆盖2010-12-01至2011-12-09，金额单位英镑GBP。有效正向交易要求单据/商品非空、日期有效、数量和单价>0、单据不以C开头。
+数据来自 [UCI Online Retail](https://archive.ics.uci.edu/dataset/352/online%2Bretail)，共 541,909 条记录，覆盖 2010-12-01 至 2011-12-09，金额单位为英镑。
 
-| 指标 | 全量实测 |
+我们将单据和商品编号有效、日期有效、数量和单价大于零、且单据不以 C 开头的记录计入正向交易。取消和异常记录保留在明细层，完全重复行保留并标记。客户编号缺失的交易仍计入金额和订单数，但不计入已知客户数。
+
+| 指标 | 全量结果 |
 |---|---:|
-| 原始交易明细 | 541,909行 |
-| 有效正向交易明细 | 530,104行 |
 | 正向交易金额 | £10,666,684.54 |
-| 销售订单数，正向单据去重 | 19,960 |
+| 销售订单数 | 19,960 |
 | 记录数量合计 | 5,588,376 |
 | 已知购买客户数 | 4,338 |
 | 平均订单金额 | £534.40 |
 
-金额包含邮资、手工记账和调整项目，未抵扣取消记录，因此不代表纯商品净收入；记录数量合计也不等于纯实物销量。客户缺失的有效交易计入金额和订单，但不计入客户数。重复行仅标记保留。原始文件无业务明细唯一键，不能认定完全重复必然是导出错误。
+正向交易金额包含邮费和人工调整项目，取消记录未冲抵。订单和客户在当前筛选范围内分别去重，平均订单金额按总金额除以订单数计算。2011 年 12 月的数据截至 9 日。
 
-2011年12月仅覆盖1日至9日，不能和完整月份直接比较月总量。商品23843有一笔£168,469.60正向记录及12分钟后相同客户/商品/单价、数量相反的取消记录，说明正向排行不可直接解释为已履约畅销榜。
-
-## 代码导航
+## 项目结构
 
 ```text
-app.py                  中文看板
-pipeline.py             完整重建入口
-src/download_data.py    官方数据下载与来源追踪
-src/ingest.py           ODS导入
-src/quality.py          数据质量统计
-src/analytics.py        统一查询接口
-src/validation.py       数据正确性校验
-sql/10_clean.sql        清洗与质量标记
-sql/20_model.sql        DIM和DWD
-sql/30_marts.sql        DWS和ADS
-tests/                  模型、指标与页面测试
-data/raw/               官方原始Excel及来源凭据
-data/warehouse/         已生成DuckDB数据库
-data/exports/           分析、质量、校验及表清单
-docs/                   四人模块文档与演示指南
-assets/                 模型图、分析图和界面截图
+app.py                  Streamlit 页面
+pipeline.py             ETL 入口
+src/                    数据导入、质量检查和指标查询
+sql/                    清洗、维度建模和汇总 SQL
+tests/                  模型、指标和页面测试
+data/raw/               原始 Excel 和来源信息
+data/warehouse/         DuckDB 数据库
+data/exports/           分析结果和校验记录
+docs/                   需求、模型和模块说明
+assets/                 模型图、分析图和页面截图
+期末大作业报告.docx       项目报告
 ```
 
-## 团队交接
+## 小组分工
 
-| 角色 | 已完成工作 | 主要解释内容 |
-|---|---|---|
-| A 温家正 | 下载、ODS、清洗、质量检查 | 来源可信、异常保留、真实数据限制 |
-| B 梁宁炜 | 概念、逻辑、物理、DIM/DWD | 粒度、星型模型、未知成员、全量重建 |
-| C 虞上昕 | 需求、指标、DWS/ADS、验证 | 可加/不可加指标、参数筛选、业务结论 |
-| D 林游鑫 | 看板、导出、演示步骤 | 页面使用、多维操作、结果解释 |
+| 成员 | 负责内容 |
+|---|---|
+| 温家正 | 数据获取、ODS 导入、清洗和数据质量检查 |
+| 梁宁炜 | 概念、逻辑和物理设计，DIM / DWD 开发 |
+| 虞上昕 | 需求与指标定义，DWS / ADS 开发和数据校验 |
+| 林游鑫 | 可视化页面、结果导出和系统集成 |
 
-## 数据来源与许可
+## 数据来源
 
-Chen, D. (2015). Online Retail [Dataset]. UCI Machine Learning Repository. DOI: https://doi.org/10.24432/C5BW33 。官方页面：https://archive.ics.uci.edu/dataset/352/online%2Bretail 。数据许可CC BY 4.0，保留署名。数据原文件SHA256和下载时间见 `data/raw/SOURCE.json`。
-
-本项目为单机离线课程实现，采用快照全量覆盖，未实现实时采集、SCD2、多写入者并发或生产级调度。仓库内报告保留原交付版本，提交前请补齐报告中的成员信息，并录制实际关键操作视频。期中检查PPT由温家正一人讲解，项目开发仍按四人分工。演示脚本不能代替录屏。
+Chen, D. (2015). *Online Retail*. UCI Machine Learning Repository. [DOI: 10.24432/C5BW33](https://doi.org/10.24432/C5BW33)。数据采用 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 许可，原始文件的下载信息和校验值保存在 `data/raw/SOURCE.json`。
