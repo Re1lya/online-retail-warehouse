@@ -1,6 +1,6 @@
 {
-  "built_at": "2026-11-11T14:52:59.837714+08:00",
-  "elapsed_seconds": 12.13,
+  "built_at": "2026-11-15T23:12:31.393254+08:00",
+  "elapsed_seconds": 13.23,
   "source_sha256": "43465a06f2ccf7c8b5bd2892bc7defb52f97487934fe93b16ae4c3936424676d",
   "ingest": {
     "source_file": "Online Retail.xlsx",
@@ -15,26 +15,56 @@
     {
       "table_schema": "ads",
       "table_name": "customer_daily",
-      "table_type": "VIEW",
+      "table_type": "BASE TABLE",
       "row_count": 16763
     },
     {
       "table_schema": "ads",
+      "table_name": "net_daily",
+      "table_type": "BASE TABLE",
+      "row_count": 1716
+    },
+    {
+      "table_schema": "ads",
+      "table_name": "overview",
+      "table_type": "BASE TABLE",
+      "row_count": 1
+    },
+    {
+      "table_schema": "ads",
       "table_name": "product_daily",
-      "table_type": "VIEW",
+      "table_type": "BASE TABLE",
       "row_count": 304760
     },
     {
       "table_schema": "ads",
       "table_name": "sales_daily",
-      "table_type": "VIEW",
+      "table_type": "BASE TABLE",
       "row_count": 1554
     },
     {
       "table_schema": "ads",
       "table_name": "sales_detail",
-      "table_type": "VIEW",
+      "table_type": "BASE TABLE",
       "row_count": 530104
+    },
+    {
+      "table_schema": "ads",
+      "table_name": "time_rollup",
+      "table_type": "BASE TABLE",
+      "row_count": 21
+    },
+    {
+      "table_schema": "ads",
+      "table_name": "transaction_cube",
+      "table_type": "BASE TABLE",
+      "row_count": 931
+    },
+    {
+      "table_schema": "ads",
+      "table_name": "transaction_detail",
+      "table_type": "BASE TABLE",
+      "row_count": 539392
     },
     {
       "table_schema": "dim",
@@ -62,6 +92,18 @@
     },
     {
       "table_schema": "dwd",
+      "table_name": "fact_cancellation",
+      "table_type": "BASE TABLE",
+      "row_count": 9288
+    },
+    {
+      "table_schema": "dwd",
+      "table_name": "fact_sales",
+      "table_type": "BASE TABLE",
+      "row_count": 530104
+    },
+    {
+      "table_schema": "dwd",
       "table_name": "fact_transaction",
       "table_type": "BASE TABLE",
       "row_count": 541909
@@ -74,6 +116,12 @@
     },
     {
       "table_schema": "dws",
+      "table_name": "net_day_country",
+      "table_type": "BASE TABLE",
+      "row_count": 1716
+    },
+    {
+      "table_schema": "dws",
       "table_name": "product_day_country",
       "table_type": "BASE TABLE",
       "row_count": 304760
@@ -83,6 +131,18 @@
       "table_name": "sales_day_country",
       "table_type": "BASE TABLE",
       "row_count": 1554
+    },
+    {
+      "table_schema": "dws",
+      "table_name": "sales_detail",
+      "table_type": "BASE TABLE",
+      "row_count": 530104
+    },
+    {
+      "table_schema": "dws",
+      "table_name": "transaction_detail",
+      "table_type": "BASE TABLE",
+      "row_count": 539392
     },
     {
       "table_schema": "ods",

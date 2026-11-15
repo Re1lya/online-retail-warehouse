@@ -1,0 +1,277 @@
+{
+  "version": 2,
+  "sources": [
+    {
+      "name": "raw",
+      "schema": "ods",
+      "tables": [
+        {
+          "name": "retail_raw",
+          "description": "UCI原始Excel文本字段与来源行号",
+          "columns": [
+            {
+              "name": "source_row_number",
+              "data_tests": [
+                "not_null",
+                "unique"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "models": [
+    {
+      "name": "stg_clean_transactions",
+      "description": "原始行粒度清洗结果，保留全部记录并标记取消及完全重复行。",
+      "columns": [
+        {
+          "name": "source_row_number",
+          "data_tests": [
+            "not_null",
+            "unique"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dim_date",
+      "description": "连续日期维，包含年季度月日、ISO周、周末与月首月末；0为未知日期。",
+      "columns": [
+        {
+          "name": "date_key",
+          "data_tests": [
+            "not_null",
+            "unique"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dim_product",
+      "description": "商品快照维，按最新非空描述确定名称，未知成员为0。",
+      "columns": [
+        {
+          "name": "product_key",
+          "data_tests": [
+            "not_null",
+            "unique"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dim_customer",
+      "description": "客户快照属性基于完整源数据观察窗口计算，不作为历史时点预测特征；国家仍关联事实。",
+      "columns": [
+        {
+          "name": "customer_key",
+          "data_tests": [
+            "not_null",
+            "unique"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dim_country",
+      "description": "依据英国零售商背景划分本土、海外、未知，不推测省市或客户国籍。",
+      "columns": [
+        {
+          "name": "country_key",
+          "data_tests": [
+            "not_null",
+            "unique"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dwd_fact_transaction",
+      "description": "原始交易明细事实，一条来源行对应一条事实，保留全部质量标记。",
+      "columns": [
+        {
+          "name": "source_row_number",
+          "data_tests": [
+            "not_null",
+            "unique"
+          ]
+        },
+        {
+          "name": "date_key",
+          "data_tests": [
+            "not_null",
+            {
+              "relationships": {
+                "arguments": {
+                  "to": "{{ ref('dim_date') }}",
+                  "field": "date_key"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "product_key",
+          "data_tests": [
+            "not_null",
+            {
+              "relationships": {
+                "arguments": {
+                  "to": "{{ ref('dim_product') }}",
+                  "field": "product_key"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "customer_key",
+          "data_tests": [
+            "not_null",
+            {
+              "relationships": {
+                "arguments": {
+                  "to": "{{ ref('dim_customer') }}",
+                  "field": "customer_key"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "country_key",
+          "data_tests": [
+            "not_null",
+            {
+              "relationships": {
+                "arguments": {
+                  "to": "{{ ref('dim_country') }}",
+                  "field": "country_key"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dwd_fact_sales",
+      "description": "有效正向销售事实，数量和单价为正且非取消。",
+      "columns": [
+        {
+          "name": "source_row_number",
+          "data_tests": [
+            "not_null",
+            "unique"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dwd_fact_cancellation",
+      "description": "全部C开头取消行，valid标记决定是否计入取消金额；没有原单对应关系或退款完成状态。",
+      "columns": [
+        {
+          "name": "source_row_number",
+          "data_tests": [
+            "not_null",
+            "unique"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dws_sales_detail",
+      "description": "销售分析宽表，为主题聚合和应用查询提供同一口径。",
+      "columns": [
+        {
+          "name": "source_row_number",
+          "data_tests": [
+            "not_null",
+            "unique"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dws_transaction_detail",
+      "description": "按事件合并销售与有效取消，避免事实表之间直接连接造成金额放大。",
+      "columns": [
+        {
+          "name": "source_row_number",
+          "data_tests": [
+            "not_null",
+            "unique"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dws_sales_day_country",
+      "description": "按日期和国家汇总正向交易；去重数不可直接跨日期相加。",
+      "columns": []
+    },
+    {
+      "name": "dws_product_day_country",
+      "description": "按日期和国家汇总正向交易；去重数不可直接跨日期相加。",
+      "columns": []
+    },
+    {
+      "name": "dws_customer_day_country",
+      "description": "按日期和国家汇总正向交易；去重数不可直接跨日期相加。",
+      "columns": []
+    },
+    {
+      "name": "dws_net_day_country",
+      "description": "日国家销售、取消及净交易记录金额汇总；取消金额展示为正数。",
+      "columns": []
+    },
+    {
+      "name": "ads_sales_detail",
+      "description": "面向页面的物化应用表，来自上游主题层。",
+      "columns": []
+    },
+    {
+      "name": "ads_transaction_detail",
+      "description": "面向页面的物化应用表，来自上游主题层。",
+      "columns": []
+    },
+    {
+      "name": "ads_sales_daily",
+      "description": "面向页面的物化应用表，来自上游主题层。",
+      "columns": []
+    },
+    {
+      "name": "ads_product_daily",
+      "description": "面向页面的物化应用表，来自上游主题层。",
+      "columns": []
+    },
+    {
+      "name": "ads_customer_daily",
+      "description": "面向页面的物化应用表，来自上游主题层。",
+      "columns": []
+    },
+    {
+      "name": "ads_net_daily",
+      "description": "面向页面的物化应用表，来自上游主题层。",
+      "columns": []
+    },
+    {
+      "name": "ads_overview",
+      "description": "全量指标结果，取消金额占比为同窗口金额比，不代表同批订单退货率。",
+      "columns": []
+    },
+    {
+      "name": "ads_transaction_cube",
+      "description": "月份、国家、交易类型的八种组合汇总。GROUPING标志区分总计，不可把不同汇总层级相加。",
+      "columns": []
+    },
+    {
+      "name": "ads_time_rollup",
+      "description": "年、季度、月的层级上卷，包含月、季度、年及全量四个层级。",
+      "columns": []
+    }
+  ]
+}

@@ -7,9 +7,29 @@ import duckdb
 import pytest
 
 
-MODEL_SQL = (Path(__file__).resolve().parents[1] / "sql" / "20_model.sql").read_text(
-    encoding="utf-8"
-)
+from jinja2 import Environment, StrictUndefined
+import re
+
+MODELS = Path(__file__).resolve().parents[1] / 'dbt/models'
+
+
+def build_models(con):
+    """执行实际 dbt 模型的 SELECT；边界夹具从 STG 开始，dbt 本身由全量集成运行验证。"""
+    files = {p.stem: p.read_text() for p in MODELS.rglob('*.sql') if p.stem != 'stg_clean_transactions'}
+    relations = {'stg_clean_transactions': 'stg.clean_transactions'}
+    for name, sql in files.items():
+        schema, alias = re.search(r"schema='([^']+)', alias='([^']+)'", sql).groups()
+        relations[name] = f'{schema}.{alias}'
+    completed = {'stg_clean_transactions'}
+    while files:
+        ready = [n for n,s in files.items() if set(re.findall(r"ref\('([^']+)'\)",s)) <= completed]
+        assert ready, '模型依赖存在循环'
+        for name in ready:
+            sql = Environment(undefined=StrictUndefined).from_string(files.pop(name)).render(
+                config=lambda **kwargs: '', ref=lambda n: relations[n])
+            con.execute(f"CREATE SCHEMA IF NOT EXISTS {relations[name].split('.')[0]}")
+            con.execute(f'CREATE OR REPLACE TABLE {relations[name]} AS {sql}')
+            completed.add(name)
 
 
 @pytest.fixture
@@ -53,7 +73,7 @@ def load_boundary_fixture(con):
 
 def test_grain_unknown_members_and_no_join_amplification(con):
     load_boundary_fixture(con)
-    con.execute(MODEL_SQL)
+    build_models(con)
     assert con.execute("SELECT count(*) FROM dwd.fact_transaction").fetchone()[0] == 6
     assert con.execute(
         "SELECT count(DISTINCT source_row_number) FROM dwd.fact_transaction"
@@ -77,7 +97,7 @@ def test_grain_unknown_members_and_no_join_amplification(con):
 
 def test_latest_nonempty_description_and_transaction_country(con):
     load_boundary_fixture(con)
-    con.execute(MODEL_SQL)
+    build_models(con)
     assert con.execute(
         "SELECT description FROM dim.product WHERE stock_code = 'P1'"
     ).fetchone()[0] == "新名称"
@@ -92,7 +112,7 @@ def test_latest_nonempty_description_and_transaction_country(con):
 
 def test_money_cancelled_and_duplicate_records_are_preserved(con):
     load_boundary_fixture(con)
-    con.execute(MODEL_SQL)
+    build_models(con)
     assert con.execute(
         "SELECT line_amount FROM dwd.fact_transaction WHERE source_row_number=2"
     ).fetchone()[0] == Decimal("2.4690")
@@ -110,11 +130,11 @@ def test_money_cancelled_and_duplicate_records_are_preserved(con):
 
 def test_rebuild_is_deterministic(con):
     load_boundary_fixture(con)
-    con.execute(MODEL_SQL)
+    build_models(con)
     before = con.execute(
         "SELECT * FROM dwd.fact_transaction ORDER BY source_row_number"
     ).fetchall()
-    con.execute(MODEL_SQL)
+    build_models(con)
     after = con.execute(
         "SELECT * FROM dwd.fact_transaction ORDER BY source_row_number"
     ).fetchall()
@@ -122,7 +142,7 @@ def test_rebuild_is_deterministic(con):
 
 
 def test_empty_source_keeps_unknown_members(con):
-    con.execute(MODEL_SQL)
+    build_models(con)
     assert con.execute("SELECT count(*) FROM dwd.fact_transaction").fetchone()[0] == 0
     for dimension in ["date", "product", "customer", "country"]:
         assert con.execute(f"SELECT count(*) FROM dim.{dimension}").fetchone()[0] == 1

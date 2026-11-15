@@ -3,6 +3,10 @@ __pycache__/
 .pytest_cache/
 *.building.duckdb
 *.wal
+*.duckdb.lock
+dbt/target/
+dbt/logs/
+dbt/.user.yml
 .DS_Store
 
 # Local credentials and editor files

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="592.704pt" height="460.073465pt" viewBox="0 0 592.704 460.073465" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="592.704pt" height="459.968484pt" viewBox="0 0 592.704 459.968484" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-11T14:54:13.262767</dc:date>
+    <dc:date>2026-11-15T23:12:17.509151</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -21,176 +21,240 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 460.073465 
-L 592.704 460.073465 
-L 592.704 0 
-L 0 0 
+   <path d="M 0 459.968484
+L 592.704 459.968484
+L 592.704 -0
+L 0 -0
 z
 " style="fill: #ffffff"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 168.576525 166.838621 
-Q 182.995268 174.390511 195.928394 181.164301 
-" clip-path="url(#pe16a232e92)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
-    <path d="M 192.528286 176.448448 
-L 195.928394 181.164301 
-L 190.115647 181.054875 
+    <path d="M 168.797925 162.516235
+Q 182.993672 162.516235 195.512368 162.516235
+" clip-path="url(#p1e9df5e51a)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 190.312368 159.916235
+L 195.512368 162.516235
+L 190.312368 165.116235
 z
-" clip-path="url(#pe16a232e92)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#p1e9df5e51a)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_3">
-    <path d="M 424.520855 167.356296 
-Q 409.707711 182.873216 396.052593 197.177091 
-" clip-path="url(#pe16a232e92)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
-    <path d="M 401.523893 195.211163 
-L 396.052593 197.177091 
-L 397.762631 191.620494 
+    <path d="M 423.906075 162.516235
+Q 409.710328 162.516235 397.191632 162.516235
+" clip-path="url(#p1e9df5e51a)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 402.391632 165.116235
+L 397.191632 162.516235
+L 402.391632 159.916235
 z
-" clip-path="url(#pe16a232e92)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#p1e9df5e51a)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_4">
-    <path d="M 167.446792 326.862558 
-Q 182.99485 281.259661 198.001717 237.244093 
-" clip-path="url(#pe16a232e92)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
-    <path d="M 193.862757 241.326862 
-L 198.001717 237.244093 
-L 198.784556 243.004923 
+    <path d="M 167.264928 296.279515
+Q 182.99462 230.371464 198.335 166.094649
+" clip-path="url(#p1e9df5e51a)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 194.598891 170.549028
+L 198.335 166.094649
+L 199.656838 171.756163
 z
-" clip-path="url(#pe16a232e92)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#p1e9df5e51a)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_5">
-    <path d="M 425.136624 326.910081 
-Q 409.709392 289.741661 394.925062 254.122168 
-" clip-path="url(#pe16a232e92)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
-    <path d="M 394.517132 259.921616 
-L 394.925062 254.122168 
-L 399.319862 257.928181 
+    <path d="M 425.439072 296.279515
+Q 409.70938 230.371464 394.369 166.094649
+" clip-path="url(#p1e9df5e51a)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 393.047162 171.756163
+L 394.369 166.094649
+L 398.105109 170.549028
 z
-" clip-path="url(#pe16a232e92)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#p1e9df5e51a)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_6">
-    <path d="M 200.808411 383.716363 
-L 391.895589 383.716363 
-Q 399.992503 383.716363 399.992503 378.627403 
-L 399.992503 116.037067 
-Q 399.992503 110.948107 391.895589 110.948107 
-L 200.808411 110.948107 
-Q 192.711497 110.948107 192.711497 116.037067 
-L 192.711497 378.627403 
-Q 192.711497 383.716363 200.808411 383.716363 
+    <path d="M 296.352 205.229457
+Q 296.352 218.494221 296.352 230.081935
+" clip-path="url(#p1e9df5e51a)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 298.952 224.881935
+L 296.352 230.081935
+L 293.752 224.881935
 z
-" clip-path="url(#pe16a232e92)" style="fill: #eaf3f5; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+" clip-path="url(#p1e9df5e51a)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_7">
-    <path d="M 33.472183 203.906443 
-L 165.181989 203.906443 
-Q 173.278903 203.906443 173.278903 198.817483 
-L 173.278903 119.429707 
-Q 173.278903 114.340747 165.181989 114.340747 
-L 33.472183 114.340747 
-Q 25.375269 114.340747 25.375269 119.429707 
-L 25.375269 198.817483 
-Q 25.375269 203.906443 33.472183 203.906443 
+    <path d="M 393.687693 184.86228
+Q 401.611829 276.169021 409.390966 365.804992
+" clip-path="url(#p1e9df5e51a)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 411.531633 360.399667
+L 409.390966 365.804992
+L 406.351105 360.849263
 z
-" clip-path="url(#pe16a232e92)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+" clip-path="url(#p1e9df5e51a)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_8">
-    <path d="M 427.522011 203.906443 
-L 559.231817 203.906443 
-Q 567.328731 203.906443 567.328731 198.817483 
-L 567.328731 119.429707 
-Q 567.328731 114.340747 559.231817 114.340747 
-L 427.522011 114.340747 
-Q 419.425097 114.340747 419.425097 119.429707 
-L 419.425097 198.817483 
-Q 419.425097 203.906443 427.522011 203.906443 
+    <path d="M 407.712246 369.467275
+Q 401.613588 369.467275 397.19198 369.467275
+" clip-path="url(#p1e9df5e51a)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 402.39198 372.067275
+L 397.19198 369.467275
+L 402.39198 366.867275
 z
-" clip-path="url(#pe16a232e92)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+" clip-path="url(#p1e9df5e51a)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_9">
-    <path d="M 33.472183 370.145803 
-L 165.181989 370.145803 
-Q 173.278903 370.145803 173.278903 365.056843 
-L 173.278903 289.061707 
-Q 173.278903 283.972747 165.181989 283.972747 
-L 33.472183 283.972747 
-Q 25.375269 283.972747 25.375269 289.061707 
-L 25.375269 365.056843 
-Q 25.375269 370.145803 33.472183 370.145803 
+    <path d="M 200.808411 207.299083
+L 391.895589 207.299083
+Q 399.992503 207.299083 399.992503 202.210123
+L 399.992503 119.429707
+Q 399.992503 114.340747 391.895589 114.340747
+L 200.808411 114.340747
+Q 192.711497 114.340747 192.711497 119.429707
+L 192.711497 202.210123
+Q 192.711497 207.299083 200.808411 207.299083
 z
-" clip-path="url(#pe16a232e92)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+" clip-path="url(#p1e9df5e51a)" style="fill: #eaf3f5; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
    </g>
    <g id="patch_10">
-    <path d="M 427.522011 370.145803 
-L 559.231817 370.145803 
-Q 567.328731 370.145803 567.328731 365.056843 
-L 567.328731 289.061707 
-Q 567.328731 283.972747 559.231817 283.972747 
-L 427.522011 283.972747 
-Q 419.425097 283.972747 419.425097 289.061707 
-L 419.425097 365.056843 
-Q 419.425097 370.145803 427.522011 370.145803 
+    <path d="M 200.808411 309.078283
+L 391.895589 309.078283
+Q 399.992503 309.078283 399.992503 303.989323
+L 399.992503 234.779467
+Q 399.992503 229.690507 391.895589 229.690507
+L 200.808411 229.690507
+Q 192.711497 229.690507 192.711497 234.779467
+L 192.711497 303.989323
+Q 192.711497 309.078283 200.808411 309.078283
 z
-" clip-path="url(#pe16a232e92)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+" clip-path="url(#p1e9df5e51a)" style="fill: #eaf3f5; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 200.808411 410.857483
+L 391.895589 410.857483
+Q 399.992503 410.857483 399.992503 405.768523
+L 399.992503 336.558667
+Q 399.992503 331.469707 391.895589 331.469707
+L 200.808411 331.469707
+Q 192.711497 331.469707 192.711497 336.558667
+L 192.711497 405.768523
+Q 192.711497 410.857483 200.808411 410.857483
+z
+" clip-path="url(#p1e9df5e51a)" style="fill: #eaf3f5; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 33.472183 207.299083
+L 165.181989 207.299083
+Q 173.278903 207.299083 173.278903 202.210123
+L 173.278903 119.429707
+Q 173.278903 114.340747 165.181989 114.340747
+L 33.472183 114.340747
+Q 25.375269 114.340747 25.375269 119.429707
+L 25.375269 202.210123
+Q 25.375269 207.299083 33.472183 207.299083
+z
+" clip-path="url(#p1e9df5e51a)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 427.522011 207.299083
+L 559.231817 207.299083
+Q 567.328731 207.299083 567.328731 202.210123
+L 567.328731 119.429707
+Q 567.328731 114.340747 559.231817 114.340747
+L 427.522011 114.340747
+Q 419.425097 114.340747 419.425097 119.429707
+L 419.425097 202.210123
+Q 419.425097 207.299083 427.522011 207.299083
+z
+" clip-path="url(#p1e9df5e51a)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 33.472183 359.967883
+L 165.181989 359.967883
+Q 173.278903 359.967883 173.278903 354.878923
+L 173.278903 265.313227
+Q 173.278903 260.224267 165.181989 260.224267
+L 33.472183 260.224267
+Q 25.375269 260.224267 25.375269 265.313227
+L 25.375269 354.878923
+Q 25.375269 359.967883 33.472183 359.967883
+z
+" clip-path="url(#p1e9df5e51a)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 427.522011 359.967883
+L 559.231817 359.967883
+Q 567.328731 359.967883 567.328731 354.878923
+L 567.328731 265.313227
+Q 567.328731 260.224267 559.231817 260.224267
+L 427.522011 260.224267
+Q 419.425097 260.224267 419.425097 265.313227
+L 419.425097 354.878923
+Q 419.425097 359.967883 427.522011 359.967883
+z
+" clip-path="url(#p1e9df5e51a)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
-    <text style="font-weight: 700; font-size: 12.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="296.352" y="135.993857" transform="rotate(-0 296.352 135.993857)">dwd.fact_transaction</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="296.352" y="139.022483" transform="rotate(-0 296.352 139.022483)">dwd.fact_transaction</text>
    </g>
    <g id="text_2">
-    <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(235.317547 195.724903)">PK source_row_number</text>
-    <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(239.146688 212.444544)">invoice_no · invoice_ts</text>
-    <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(264.394578 228.675435)">FK date_key</text>
-    <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(256.407469 245.395076)">FK product_key</text>
-    <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(251.940438 262.114717)">FK customer_key</text>
-    <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(256.730008 278.834358)">FK country_key</text>
-    <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(246.814852 295.553999)">quantity · unit_price</text>
-    <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(265.349617 312.762391)">line_amount</text>
-    <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(244.602 330.484688)">三类质量与交易标记</text>
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(231.268094 160.941611)">全部来源记录 · 原始行粒度</text>
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(226.684188 176.958374)">来源行号 · 单据 · 四个维度键</text>
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(227.600281 192.986308)">数量 · 单价 · 金额 · 质量标记</text>
    </g>
    <g id="text_3">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="99.327086" y="139.022483" transform="rotate(-0 99.327086 139.022483)">dim.date</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="296.352" y="254.372243" transform="rotate(-0 296.352 254.372243)">dwd.fact_sales</text>
    </g>
    <g id="text_4">
-    <text style="font-size: 10.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(69.853258 158.387427)">PK date_key</text>
-    <text style="font-size: 10.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(79.774117 174.163421)">full_date</text>
-    <text style="font-size: 10.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(36.301656 188.918946)">year / quarter / month / day</text>
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(252.352 277.492129)">有效正向来源记录</text>
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(226.684188 293.519204)">来源行号 · 共享维度键 · 度量</text>
    </g>
    <g id="text_5">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="493.376914" y="139.022483" transform="rotate(-0 493.376914 139.022483)">dim.product</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="296.352" y="356.151443" transform="rotate(-0 296.352 356.151443)">dwd.fact_cancellation</text>
    </g>
    <g id="text_6">
-    <text style="font-size: 11.2px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(454.159414 157.546733)">PK product_key</text>
-    <text style="font-size: 11.2px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(465.364664 174.30621)">stock_code</text>
-    <text style="font-size: 11.2px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(466.297414 190.174062)">description</text>
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(259.379969 379.244688)">C开头来源记录</text>
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(231.268094 395.293248)">共享维度键 · 有效取消标记</text>
    </g>
    <g id="text_7">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="99.327086" y="308.654483" transform="rotate(-0 99.327086 308.654483)">dim.customer</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="99.327086" y="139.022483" transform="rotate(-0 99.327086 139.022483)">dim.date</text>
    </g>
    <g id="text_8">
-    <text style="font-size: 11.2px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(55.759086 333.624152)">PK customer_key</text>
-    <text style="font-size: 11.2px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(69.141336 350.383628)">customer_id</text>
+    <text style="font-size: 10.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(58.201539 161.434802)">日期键 · 连续日历</text>
+    <text style="font-size: 10.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(59.950445 176.707944)">年 / 季度 / 月 / 日</text>
+    <text style="font-size: 10.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(59.657594 191.984367)">ISO周 · 月首月末</text>
    </g>
    <g id="text_9">
-    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="493.376914" y="308.654483" transform="rotate(-0 493.376914 308.654483)">dim.country</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="493.376914" y="139.022483" transform="rotate(-0 493.376914 139.022483)">dim.product</text>
    </g>
    <g id="text_10">
-    <text style="font-size: 11.2px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(454.473539 333.624152)">PK country_key</text>
-    <text style="font-size: 11.2px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(475.014164 349.820128)">country</text>
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(455.793008 168.879524)">商品键 · 源代码</text>
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(460.376914 184.868786)">最新非空描述</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="99.327086" y="284.906003" transform="rotate(-0 99.327086 284.906003)">dim.customer</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 10.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(58.201539 310.762642)">客户键 · 客户编号</text>
+    <text style="font-size: 10.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(52.951539 326.043987)">首末次交易 / 购买日</text>
+    <text style="font-size: 10.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(62.577086 341.273652)">观察到的国家数</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="493.376914" y="284.906003" transform="rotate(-0 493.376914 284.906003)">dim.country</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(455.793008 318.134199)">国家键 · 源国家</text>
+    <text style="font-size: 11px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(451.209102 334.199087)">本土 / 海外 / 未知</text>
    </g>
   </g>
-  <g id="text_11">
-   <text style="font-weight: 700; font-size: 20px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #183650" x="24.768" y="29.756875" transform="rotate(-0 24.768 29.756875)">逻辑设计：四维星型模型</text>
+  <g id="text_15">
+   <text style="font-weight: 700; font-size: 20px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #183650" x="24.768" y="29.756875" transform="rotate(-0 24.768 29.756875)">逻辑设计：共享维度与业务事实</text>
   </g>
-  <g id="text_12">
-   <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #5a6d7b" x="24.768" y="52.076875" transform="rotate(-0 24.768 52.076875)">PK 主键；FK 逻辑外键；所有维度均有 key = 0 的未知成员</text>
+  <g id="text_16">
+   <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #5a6d7b" x="24.768" y="52.076875" transform="rotate(-0 24.768 52.076875)">逻辑键唯一性、非空和关联由 dbt 数据测试验证</text>
   </g>
-  <g id="text_13">
-   <text style="font-size: 10.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #5a6d7b" x="24.768" y="444.908875" transform="rotate(-0 24.768 444.908875)">粒度：来源交易明细行。金额采用 DECIMAL；全部来源行保留，可追溯至原始 Excel。</text>
+  <g id="text_17">
+   <text style="font-size: 10px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #5a6d7b" x="24.768" y="444.908875" transform="rotate(-0 24.768 444.908875)">两类业务事实均由原始事实筛选，使用相同维度；分析时合并事件，不做事实表之间的多对多连接。</text>
   </g>
  </g>
  <defs>
-  <clipPath id="pe16a232e92">
+  <clipPath id="p1e9df5e51a">
    <rect x="12.96" y="81.092875" width="566.784" height="339.264"/>
   </clipPath>
  </defs>

@@ -70,6 +70,8 @@ def dashboard_data(database: str, version: int, start, end, selected: tuple, gra
             "products": analytics.products(con, start, end, countries=filters, limit=10),
             "countries": analytics.country_ranking(con, start, end, countries=filters),
             "customers": analytics.customers(con, start, end, countries=filters, limit=10),
+            "net": analytics.net_overview(con,start,end,countries=filters),
+            "net_trend": analytics.net_trend(con,start,end,countries=filters,grain=grain),
         }
 
 
@@ -159,9 +161,8 @@ st.caption("仅统计有效正向交易，包含邮资、手工记账及调整�
 
 if int(kpi["order_count"]) == 0:
     st.info("当前日期与国家组合没有有效正向销售记录，请调整筛选条件。")
-    st.stop()
 
-overview_tab, product_tab, market_tab = st.tabs(["销售概览", "商品与业务项目", "国家与客户"])
+overview_tab, product_tab, market_tab, olap_tab = st.tabs(["销售概览", "商品与业务项目", "国家与客户", "取消与多维分析"])
 
 with overview_tab:
     st.subheader("交易金额趋势")
@@ -246,6 +247,44 @@ with market_tab:
             st.dataframe(customer_table, hide_index=True, width="stretch", height=380)
             export_table(customer_table, "下载客户排行 CSV", "客户消费排行.csv")
         st.caption("客户仅以原始编号展示。国家表示该交易记录中的客户所在国家。")
+
+with olap_tab:
+    net=data['net']
+    cols=st.columns(4)
+    cols[0].metric('取消记录金额',f"£{net['cancellation_amount']:,.2f}")
+    cols[1].metric('净交易记录金额',f"£{net['net_recorded_amount']:,.2f}")
+    cols[2].metric('取消单据数',f"{net['cancellation_order_count']:,}")
+    cols[3].metric('取消金额占比',f"{net['cancellation_amount_ratio']:.2%}" if net['cancellation_amount_ratio'] is not None else '—')
+    st.caption('取消金额按有效C开头负数量记录的金额绝对值统计。净交易记录金额＝销售金额－取消金额。取消发生日期可能与原销售不同，金额占比不是同批订单退货率。')
+    nt=data['net_trend']
+    if not nt.empty:
+        long=nt.melt(id_vars='period',value_vars=['sales_amount','cancellation_amount','net_recorded_amount'])
+        long['variable']=long['variable'].map({'sales_amount':'销售金额','cancellation_amount':'取消金额','net_recorded_amount':'净交易记录金额'})
+        fig=px.line(long,x='period',y='value',color='variable',markers=True,
+                    labels={'period':'交易日期','value':'金额（GBP）','variable':'指标'})
+        fig=configure_chart(fig);fig.update_layout(showlegend=True)
+        st.plotly_chart(fig,width='stretch')
+    st.subheader('多维交叉分析')
+    labels={'月份':'month','国家':'country','交易类型':'type'}
+    selected=st.multiselect('组合维度',list(labels),default=['月份','国家'],key='cube_dimensions')
+    if selected:
+        with duckdb.connect(str(DB_PATH),read_only=True) as con:
+            grid=analytics.cube(con,start,end,selected_countries,tuple(labels[x] for x in selected))
+        shown=grid.rename(columns={'month_start':'月份','country':'国家','entry_type':'交易类型',
+            'sales_amount':'销售金额','cancellation_amount':'取消金额','net_recorded_amount':'净交易记录金额',
+            'order_count':'销售订单数','customer_count':'已知客户数'})
+        st.dataframe(shown,hide_index=True,width='stretch')
+        export_table(shown,'下载多维分析CSV','多维分析.csv')
+        if set(selected)=={'月份','国家'} and not shown.empty:
+            st.dataframe(shown.pivot(index='月份',columns='国家',values='净交易记录金额').fillna(0),width='stretch')
+    else:
+        st.info('选择至少一个分析维度。')
+    with st.expander('时间层级上卷'):
+        level=st.selectbox('汇总层级',['月','季度','年','总计'],key='rollup_level')
+        with duckdb.connect(str(DB_PATH),read_only=True) as con:
+            rolled=analytics.rollup(con,start,end,selected_countries)
+        rolled=rolled[rolled.grouping_id=={'月':0,'季度':1,'年':3,'总计':7}[level]]
+        st.dataframe(rolled.drop(columns='grouping_id').rename(columns={'year':'年','quarter':'季度','month':'月','net_recorded_amount':'净交易记录金额'}),hide_index=True,width='stretch')
 
 st.divider()
 st.caption("在线零售销售分析数仓系统 · 真实历史交易 · ODS → DIM / DWD → DWS → ADS")

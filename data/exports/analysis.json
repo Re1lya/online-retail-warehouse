@@ -382,5 +382,92 @@
       "sales_amount": 77183.6,
       "order_count": 1
     }
+  ],
+  "net_overview": {
+    "sales_amount": "10666684.5440",
+    "cancellation_amount": "896812.4900",
+    "net_recorded_amount": "9769872.0540",
+    "cancellation_order_count": 3836,
+    "cancellation_amount_ratio": "0.08407603002607367630051852033"
+  },
+  "net_monthly": [
+    {
+      "period": "2010-12-01T00:00:00",
+      "sales_amount": 823746.14,
+      "cancellation_amount": 74789.12,
+      "net_recorded_amount": 748957.02
+    },
+    {
+      "period": "2011-01-01T00:00:00",
+      "sales_amount": 691364.56,
+      "cancellation_amount": 131364.3,
+      "net_recorded_amount": 560000.26
+    },
+    {
+      "period": "2011-02-01T00:00:00",
+      "sales_amount": 523631.89,
+      "cancellation_amount": 25569.24,
+      "net_recorded_amount": 498062.65
+    },
+    {
+      "period": "2011-03-01T00:00:00",
+      "sales_amount": 717639.36,
+      "cancellation_amount": 34372.28,
+      "net_recorded_amount": 683267.08
+    },
+    {
+      "period": "2011-04-01T00:00:00",
+      "sales_amount": 537808.621,
+      "cancellation_amount": 44601.5,
+      "net_recorded_amount": 493207.121
+    },
+    {
+      "period": "2011-05-01T00:00:00",
+      "sales_amount": 770536.02,
+      "cancellation_amount": 47202.51,
+      "net_recorded_amount": 723333.51
+    },
+    {
+      "period": "2011-06-01T00:00:00",
+      "sales_amount": 761739.9,
+      "cancellation_amount": 70616.78,
+      "net_recorded_amount": 691123.12
+    },
+    {
+      "period": "2011-07-01T00:00:00",
+      "sales_amount": 719221.191,
+      "cancellation_amount": 37921.08,
+      "net_recorded_amount": 681300.111
+    },
+    {
+      "period": "2011-08-01T00:00:00",
+      "sales_amount": 759138.38,
+      "cancellation_amount": 54333.75,
+      "net_recorded_amount": 704804.63
+    },
+    {
+      "period": "2011-09-01T00:00:00",
+      "sales_amount": 1058590.172,
+      "cancellation_amount": 38902.55,
+      "net_recorded_amount": 1019687.622
+    },
+    {
+      "period": "2011-10-01T00:00:00",
+      "sales_amount": 1154979.3,
+      "cancellation_amount": 84274.63,
+      "net_recorded_amount": 1070704.67
+    },
+    {
+      "period": "2011-11-01T00:00:00",
+      "sales_amount": 1509496.33,
+      "cancellation_amount": 47740.08,
+      "net_recorded_amount": 1461756.25
+    },
+    {
+      "period": "2011-12-01T00:00:00",
+      "sales_amount": 638792.68,
+      "cancellation_amount": 205124.67,
+      "net_recorded_amount": 433668.01
+    }
   ]
 }

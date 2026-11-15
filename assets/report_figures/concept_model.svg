@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-11T14:54:13.139852</dc:date>
+    <dc:date>2026-11-15T23:12:17.402278</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -21,131 +21,132 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 433.52257 
-L 592.704 433.52257 
-L 592.704 0 
-L 0 0 
+   <path d="M 0 433.52257
+L 592.704 433.52257
+L 592.704 0
+L 0 0
 z
 " style="fill: #ffffff"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 173.540893 168.253263 
-Q 193.788941 190.575115 212.91024 211.654817 
-" clip-path="url(#p877f4c5e4b)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
-    <path d="M 211.342307 206.056461 
-L 212.91024 211.654817 
-L 207.490795 209.550149 
+    <path d="M 173.540893 168.253263
+Q 193.788941 190.575115 212.91024 211.654817
+" clip-path="url(#pe8ace9fcc5)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 211.342307 206.056461
+L 212.91024 211.654817
+L 207.490795 209.550149
 z
-" clip-path="url(#p877f4c5e4b)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#pe8ace9fcc5)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_3">
-    <path d="M 419.163107 168.253263 
-Q 398.915059 190.575115 379.79376 211.654817 
-" clip-path="url(#p877f4c5e4b)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
-    <path d="M 385.213205 209.550149 
-L 379.79376 211.654817 
-L 381.361693 206.056461 
+    <path d="M 419.163107 168.253263
+Q 398.915059 190.575115 379.79376 211.654817
+" clip-path="url(#pe8ace9fcc5)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 385.213205 209.550149
+L 379.79376 211.654817
+L 381.361693 206.056461
 z
-" clip-path="url(#p877f4c5e4b)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#pe8ace9fcc5)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_4">
-    <path d="M 173.646321 317.732245 
-Q 193.792403 298.484062 212.725916 280.394403 
-" clip-path="url(#p877f4c5e4b)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
-    <path d="M 207.170022 282.106725 
-L 212.725916 280.394403 
-L 210.762237 285.866511 
+    <path d="M 173.646321 317.732245
+Q 193.792403 298.484062 212.725916 280.394403
+" clip-path="url(#pe8ace9fcc5)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 207.170022 282.106725
+L 212.725916 280.394403
+L 210.762237 285.866511
 z
-" clip-path="url(#p877f4c5e4b)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#pe8ace9fcc5)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_5">
-    <path d="M 419.057679 317.732245 
-Q 398.911597 298.484062 379.978084 280.394403 
-" clip-path="url(#p877f4c5e4b)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
-    <path d="M 381.941763 285.866511 
-L 379.978084 280.394403 
-L 385.533978 282.106725 
+    <path d="M 419.057679 317.732245
+Q 398.911597 298.484062 379.978084 280.394403
+" clip-path="url(#pe8ace9fcc5)" style="fill: none; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 381.941763 285.866511
+L 379.978084 280.394403
+L 385.533978 282.106725
 z
-" clip-path="url(#p877f4c5e4b)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#pe8ace9fcc5)" style="fill: #7894a7; stroke: #7894a7; stroke-width: 1.5; stroke-linecap: round"/>
    </g>
    <g id="patch_6">
-    <path d="M 217.00224 297.533192 
-L 375.70176 297.533192 
-Q 383.798674 297.533192 383.798674 292.772552 
-L 383.798674 199.464008 
-Q 383.798674 194.703368 375.70176 194.703368 
-L 217.00224 194.703368 
-Q 208.905326 194.703368 208.905326 199.464008 
-L 208.905326 292.772552 
-Q 208.905326 297.533192 217.00224 297.533192 
+    <path d="M 217.00224 297.533192
+L 375.70176 297.533192
+Q 383.798674 297.533192 383.798674 292.772552
+L 383.798674 199.464008
+Q 383.798674 194.703368 375.70176 194.703368
+L 217.00224 194.703368
+Q 208.905326 194.703368 208.905326 199.464008
+L 208.905326 292.772552
+Q 208.905326 297.533192 217.00224 297.533192
 z
-" clip-path="url(#p877f4c5e4b)" style="fill: #eaf3f5; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+" clip-path="url(#pe8ace9fcc5)" style="fill: #eaf3f5; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
    </g>
    <g id="patch_7">
-    <path d="M 38.870126 189.625352 
-L 170.579931 189.625352 
-Q 178.676846 189.625352 178.676846 184.864712 
-L 178.676846 110.598728 
-Q 178.676846 105.838088 170.579931 105.838088 
-L 38.870126 105.838088 
-Q 30.773211 105.838088 30.773211 110.598728 
-L 30.773211 184.864712 
-Q 30.773211 189.625352 38.870126 189.625352 
+    <path d="M 38.870126 189.625352
+L 170.579931 189.625352
+Q 178.676846 189.625352 178.676846 184.864712
+L 178.676846 110.598728
+Q 178.676846 105.838088 170.579931 105.838088
+L 38.870126 105.838088
+Q 30.773211 105.838088 30.773211 110.598728
+L 30.773211 184.864712
+Q 30.773211 189.625352 38.870126 189.625352
 z
-" clip-path="url(#p877f4c5e4b)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+" clip-path="url(#pe8ace9fcc5)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
    </g>
    <g id="patch_8">
-    <path d="M 422.124069 189.625352 
-L 553.833874 189.625352 
-Q 561.930789 189.625352 561.930789 184.864712 
-L 561.930789 110.598728 
-Q 561.930789 105.838088 553.833874 105.838088 
-L 422.124069 105.838088 
-Q 414.027154 105.838088 414.027154 110.598728 
-L 414.027154 184.864712 
-Q 414.027154 189.625352 422.124069 189.625352 
+    <path d="M 422.124069 189.625352
+L 553.833874 189.625352
+Q 561.930789 189.625352 561.930789 184.864712
+L 561.930789 110.598728
+Q 561.930789 105.838088 553.833874 105.838088
+L 422.124069 105.838088
+Q 414.027154 105.838088 414.027154 110.598728
+L 414.027154 184.864712
+Q 414.027154 189.625352 422.124069 189.625352
 z
-" clip-path="url(#p877f4c5e4b)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+" clip-path="url(#pe8ace9fcc5)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
    </g>
    <g id="patch_9">
-    <path d="M 38.870126 370.529672 
-L 170.579931 370.529672 
-Q 178.676846 370.529672 178.676846 365.769032 
-L 178.676846 291.503048 
-Q 178.676846 286.742408 170.579931 286.742408 
-L 38.870126 286.742408 
-Q 30.773211 286.742408 30.773211 291.503048 
-L 30.773211 365.769032 
-Q 30.773211 370.529672 38.870126 370.529672 
+    <path d="M 38.870126 370.529672
+L 170.579931 370.529672
+Q 178.676846 370.529672 178.676846 365.769032
+L 178.676846 291.503048
+Q 178.676846 286.742408 170.579931 286.742408
+L 38.870126 286.742408
+Q 30.773211 286.742408 30.773211 291.503048
+L 30.773211 365.769032
+Q 30.773211 370.529672 38.870126 370.529672
 z
-" clip-path="url(#p877f4c5e4b)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+" clip-path="url(#pe8ace9fcc5)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
    </g>
    <g id="patch_10">
-    <path d="M 422.124069 370.529672 
-L 553.833874 370.529672 
-Q 561.930789 370.529672 561.930789 365.769032 
-L 561.930789 291.503048 
-Q 561.930789 286.742408 553.833874 286.742408 
-L 422.124069 286.742408 
-Q 414.027154 286.742408 414.027154 291.503048 
-L 414.027154 365.769032 
-Q 414.027154 370.529672 422.124069 370.529672 
+    <path d="M 422.124069 370.529672
+L 553.833874 370.529672
+Q 561.930789 370.529672 561.930789 365.769032
+L 561.930789 291.503048
+Q 561.930789 286.742408 553.833874 286.742408
+L 422.124069 286.742408
+Q 414.027154 286.742408 414.027154 291.503048
+L 414.027154 365.769032
+Q 414.027154 370.529672 422.124069 370.529672
 z
-" clip-path="url(#p877f4c5e4b)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
+" clip-path="url(#pe8ace9fcc5)" style="fill: #ffffff; stroke: #b8cbd6; stroke-width: 1.1; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
-    <text style="font-weight: 700; font-size: 16px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="296.352" y="222.76754" transform="rotate(-0 296.352 222.76754)">交易明细</text>
+    <text style="font-weight: 700; font-size: 16px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="296.352" y="223.10504" transform="rotate(-0 296.352 223.10504)">销售 / 取消明细</text>
    </g>
    <g id="text_2">
-    <text style="font-size: 14px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(248.517938 252.452392)">单据编号 · 时间</text>
+    <text style="font-size: 14px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(234.517938 252.452392)">单据编号 · 事件时间</text>
     <text style="font-size: 14px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(242.683875 272.875644)">数量 · 单价 · 金额</text>
    </g>
    <g id="text_3">
     <text style="font-weight: 700; font-size: 13px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="104.725029" y="131.532572" transform="rotate(-0 104.725029 131.532572)">日期</text>
    </g>
    <g id="text_4">
-    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #243c4e" x="104.725029" y="163.427068" transform="rotate(-0 104.725029 163.427068)">年 · 季度 · 月 · 日</text>
+    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(59.723154 154.703776)">年 · 季度 · 月 · 日</text>
+    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(71.388466 172.195359)">ISO周 · 周末</text>
    </g>
    <g id="text_5">
     <text style="font-weight: 700; font-size: 13px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="487.978971" y="131.532572" transform="rotate(-0 487.978971 131.532572)">商品与业务项目</text>
@@ -157,22 +158,22 @@ z
     <text style="font-weight: 700; font-size: 13px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="104.725029" y="312.603455" transform="rotate(-0 104.725029 312.603455)">客户</text>
    </g>
    <g id="text_8">
-    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(68.725029 335.626846)">原始客户编号</text>
-    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(56.725029 353.079054)">未知客户保留交易</text>
+    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(57.724404 335.658721)">编号 · 首末次日期</text>
+    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(51.724404 353.072491)">跨国家数 · 未知标记</text>
    </g>
    <g id="text_9">
     <text style="font-weight: 700; font-size: 13px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #183650" x="487.978971" y="312.361736" transform="rotate(-0 487.978971 312.361736)">国家</text>
    </g>
    <g id="text_10">
-    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(451.978971 335.647471)">交易记录中的</text>
-    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(451.978971 353.099679)">客户所在国家</text>
+    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(457.978971 335.617471)">源国家名称</text>
+    <text style="font-size: 12px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; fill: #243c4e" transform="translate(441.977721 353.084679)">本土 / 海外 / 未知</text>
    </g>
    <g id="text_11">
     <g id="patch_11">
-     <path d="M 171.436606 188.333021 
-L 194.553794 188.333021 
-L 194.553794 176.953139 
-L 171.436606 176.953139 
+     <path d="M 171.436606 188.333021
+L 194.553794 188.333021
+L 194.553794 176.953139
+L 171.436606 176.953139
 z
 " style="fill: #ffffff"/>
     </g>
@@ -180,10 +181,10 @@ z
    </g>
    <g id="text_12">
     <g id="patch_12">
-     <path d="M 398.150206 188.333021 
-L 421.267394 188.333021 
-L 421.267394 176.953139 
-L 398.150206 176.953139 
+     <path d="M 398.150206 188.333021
+L 421.267394 188.333021
+L 421.267394 176.953139
+L 398.150206 176.953139
 z
 " style="fill: #ffffff"/>
     </g>
@@ -191,10 +192,10 @@ z
    </g>
    <g id="text_13">
     <g id="patch_13">
-     <path d="M 168.737635 312.109661 
-L 191.854822 312.109661 
-L 191.854822 300.729779 
-L 168.737635 300.729779 
+     <path d="M 168.737635 312.109661
+L 191.854822 312.109661
+L 191.854822 300.729779
+L 168.737635 300.729779
 z
 " style="fill: #ffffff"/>
     </g>
@@ -202,10 +203,10 @@ z
    </g>
    <g id="text_14">
     <g id="patch_14">
-     <path d="M 400.849178 312.109661 
-L 423.966365 312.109661 
-L 423.966365 300.729779 
-L 400.849178 300.729779 
+     <path d="M 400.849178 312.109661
+L 423.966365 312.109661
+L 423.966365 300.729779
+L 400.849178 300.729779
 z
 " style="fill: #ffffff"/>
     </g>
@@ -213,7 +214,7 @@ z
    </g>
   </g>
   <g id="text_15">
-   <text style="font-weight: 700; font-size: 20px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #183650" x="24.768" y="29.885" transform="rotate(-0 24.768 29.885)">概念设计：围绕销售交易分析</text>
+   <text style="font-weight: 700; font-size: 20px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #183650" x="24.768" y="29.885" transform="rotate(-0 24.768 29.885)">概念设计：销售与取消两个业务过程</text>
   </g>
   <g id="text_16">
    <text style="font-size: 11.5px; font-family: 'Arial Unicode MS', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #5a6d7b" x="24.768" y="50.765" transform="rotate(-0 24.768 50.765)">一条事实对应一条来源交易记录；单据可包含多条商品或业务项目明细</text>
@@ -223,7 +224,7 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="p877f4c5e4b">
+  <clipPath id="pe8ace9fcc5">
    <rect x="12.96" y="77.909" width="566.784" height="317.376"/>
   </clipPath>
  </defs>

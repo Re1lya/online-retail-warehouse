@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2330" height="956" viewBox="0 0 2330 956">
+<rect width="100%" height="100%" fill="white"/>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#71959c"/></marker></defs>
+<text x="25" y="35" font-family="sans-serif" font-size="25" fill="#102e3b">dbt model lineage</text>
+<path d="M1975,703.2222222222223 C1997.5,703.2222222222223 1997.5,406.0 2020,406.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1690,727.0 C1712.5,727.0 1712.5,417.8888888888889 1735,417.8888888888889" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1690,727.0 C1712.5,727.0 1712.5,513.0 1735,513.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1690,299.0 C1712.5,299.0 1712.5,227.66666666666669 1735,227.66666666666669" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1975,608.1111111111111 C1997.5,608.1111111111111 1997.5,192.0 2020,192.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1690,727.0 C1712.5,727.0 1712.5,322.77777777777777 1735,322.77777777777777" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1975,893.4444444444445 C1997.5,893.4444444444445 1997.5,834.0 2020,834.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1975,798.3333333333334 C1997.5,798.3333333333334 1997.5,620.0 2020,620.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1690,727.0 C1712.5,727.0 1712.5,132.55555555555554 1735,132.55555555555554" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1690,299.0 C1712.5,299.0 1712.5,608.1111111111111 1735,608.1111111111111" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1690,299.0 C1712.5,299.0 1712.5,798.3333333333334 1735,798.3333333333334" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1690,727.0 C1712.5,727.0 1712.5,703.2222222222223 1735,703.2222222222223" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1405,727.0 C1427.5,727.0 1427.5,727.0 1450,727.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1405,299.0 C1427.5,299.0 1427.5,727.0 1450,727.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,620.0 C1142.5,620.0 1142.5,727.0 1450,727.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,834.0 C1142.5,834.0 1142.5,727.0 1450,727.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,406.0 C1142.5,406.0 1142.5,727.0 1450,727.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,192.0 C1142.5,192.0 1142.5,727.0 1450,727.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1405,727.0 C1427.5,727.0 1427.5,299.0 1450,299.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,620.0 C1142.5,620.0 1142.5,299.0 1450,299.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,834.0 C1142.5,834.0 1142.5,299.0 1450,299.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,406.0 C1142.5,406.0 1142.5,299.0 1450,299.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,192.0 C1142.5,192.0 1142.5,299.0 1450,299.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1690,299.0 C1712.5,299.0 1712.5,893.4444444444445 1735,893.4444444444445" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M550,513.0 C572.5,513.0 572.5,834.0 595,834.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M550,513.0 C572.5,513.0 572.5,406.0 595,406.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M550,513.0 C572.5,513.0 572.5,192.0 595,192.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M550,513.0 C572.5,513.0 572.5,620.0 595,620.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1120,513.0 C1142.5,513.0 1142.5,299.0 1165,299.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M1120,513.0 C1142.5,513.0 1142.5,727.0 1165,727.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M265,513.0 C287.5,513.0 287.5,513.0 310,513.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M550,513.0 C715.0,513.0 715.0,513.0 880,513.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,620.0 C857.5,620.0 857.5,513.0 880,513.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,834.0 C857.5,834.0 857.5,513.0 880,513.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,406.0 C857.5,406.0 857.5,513.0 880,513.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<path d="M835,192.0 C857.5,192.0 857.5,513.0 880,513.0" fill="none" stroke="#71959c" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="25" y="486.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="35" y="518.0" font-family="sans-serif" font-size="15" fill="#102e3b">ods.retail_raw</text>
+<rect x="2020" y="379.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="2030" y="411.0" font-family="sans-serif" font-size="15" fill="#102e3b">ads.net_daily</text>
+<rect x="1735" y="390.8888888888889" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1745" y="422.8888888888889" font-family="sans-serif" font-size="15" fill="#102e3b">ads.transaction_cube</text>
+<rect x="1735" y="486.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1745" y="518.0" font-family="sans-serif" font-size="15" fill="#102e3b">ads.transaction_detail</text>
+<rect x="1735" y="200.66666666666669" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1745" y="232.66666666666669" font-family="sans-serif" font-size="15" fill="#102e3b">ads.sales_detail</text>
+<rect x="2020" y="165.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="2030" y="197.0" font-family="sans-serif" font-size="15" fill="#102e3b">ads.customer_daily</text>
+<rect x="1735" y="295.77777777777777" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1745" y="327.77777777777777" font-family="sans-serif" font-size="15" fill="#102e3b">ads.time_rollup</text>
+<rect x="2020" y="807.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="2030" y="839.0" font-family="sans-serif" font-size="15" fill="#102e3b">ads.sales_daily</text>
+<rect x="2020" y="593.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="2030" y="625.0" font-family="sans-serif" font-size="15" fill="#102e3b">ads.product_daily</text>
+<rect x="1735" y="105.55555555555554" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1745" y="137.55555555555554" font-family="sans-serif" font-size="15" fill="#102e3b">ads.overview</text>
+<rect x="1735" y="581.1111111111111" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1745" y="613.1111111111111" font-family="sans-serif" font-size="15" fill="#102e3b">dws.customer_day_country</text>
+<rect x="1735" y="771.3333333333334" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1745" y="803.3333333333334" font-family="sans-serif" font-size="15" fill="#102e3b">dws.product_day_country</text>
+<rect x="1735" y="676.2222222222223" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1745" y="708.2222222222223" font-family="sans-serif" font-size="15" fill="#102e3b">dws.net_day_country</text>
+<rect x="1450" y="700.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1460" y="732.0" font-family="sans-serif" font-size="15" fill="#102e3b">dws.transaction_detail</text>
+<rect x="1450" y="272.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1460" y="304.0" font-family="sans-serif" font-size="15" fill="#102e3b">dws.sales_detail</text>
+<rect x="1735" y="866.4444444444445" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1745" y="898.4444444444445" font-family="sans-serif" font-size="15" fill="#102e3b">dws.sales_day_country</text>
+<rect x="595" y="807.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="605" y="839.0" font-family="sans-serif" font-size="15" fill="#102e3b">dim.product</text>
+<rect x="595" y="379.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="605" y="411.0" font-family="sans-serif" font-size="15" fill="#102e3b">dim.customer</text>
+<rect x="595" y="165.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="605" y="197.0" font-family="sans-serif" font-size="15" fill="#102e3b">dim.country</text>
+<rect x="595" y="593.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="605" y="625.0" font-family="sans-serif" font-size="15" fill="#102e3b">dim.date</text>
+<rect x="1165" y="272.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1175" y="304.0" font-family="sans-serif" font-size="15" fill="#102e3b">dwd.fact_cancellation</text>
+<rect x="1165" y="700.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="1175" y="732.0" font-family="sans-serif" font-size="15" fill="#102e3b">dwd.fact_sales</text>
+<rect x="310" y="486.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="320" y="518.0" font-family="sans-serif" font-size="15" fill="#102e3b">stg.clean_transactions</text>
+<rect x="880" y="486.0" width="240" height="54" rx="4" fill="#edf5f5" stroke="#91b7b8"/>
+<text x="890" y="518.0" font-family="sans-serif" font-size="15" fill="#102e3b">dwd.fact_transaction</text>
+</svg>

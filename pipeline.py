@@ -7,12 +7,17 @@ import json
 from pathlib import Path
 import time
 import tempfile
+import os
+import subprocess
+import sys
+from filelock import FileLock
 from zoneinfo import ZoneInfo
 import duckdb
 from src.ingest import load_ods
 from src.quality import quality_report
 from src.validation import validate
 from src import analytics
+from src.lineage import export_lineage, portable_text
 
 ROOT=Path(__file__).resolve().parent
 
@@ -25,7 +30,20 @@ def json_value(x):
 def write_json(path,value):
     path.write_text(json.dumps(value,ensure_ascii=False,indent=2,default=json_value),encoding="utf-8")
 
+def run_dbt(db, target, command):
+    env = dict(os.environ, RETAIL_DBT_PATH=str(db), DBT_SEND_ANONYMOUS_USAGE_STATS='false')
+    subprocess.run([sys.executable, '-m', 'src.dbt_build', *command,
+        '--project-dir', str(ROOT/'dbt'), '--profiles-dir', str(ROOT/'dbt'),
+        '--target-path', str(target), '--log-path', str(target/'logs')],
+        env=env, cwd=ROOT, check=True)
+
 def run(source, db):
+    db = Path(db).resolve()
+    db.parent.mkdir(parents=True, exist_ok=True)
+    with FileLock(str(db)+'.lock', timeout=0):
+        return _run(Path(source).resolve(), db)
+
+def _run(source, db):
     started=time.perf_counter()
     db.parent.mkdir(parents=True,exist_ok=True)
     exports=ROOT/"data/exports"; exports.mkdir(parents=True,exist_ok=True)
@@ -35,9 +53,15 @@ def run(source, db):
     try:
         print("[1/5] 读取真实数据并导入ODS",flush=True)
         ingest=load_ods(con,source)
-        for i,sql in enumerate(["10_clean.sql","20_model.sql","30_marts.sql"],2):
-            print(f"[{i}/5] 执行 {sql}",flush=True)
-            con.execute((ROOT/"sql"/sql).read_text(encoding="utf-8"))
+        con.close(); con=None
+        print('[2/5] dbt构建分层模型并执行数据测试',flush=True)
+        target=ROOT/'dbt/target'
+        run_dbt(temp,target,['build'])
+        dbt_result=json.loads(portable_text((target/'run_results.json').read_text(),ROOT))
+        print('[3/5] 生成模型文档与血缘',flush=True)
+        run_dbt(temp,target,['docs','generate','--static'])
+        print('[4/5] 核对指标并准备分析结果',flush=True)
+        con=duckdb.connect(str(temp))
         quality=quality_report(con)
         validation=validate(con)
         if not validation["passed"]:
@@ -52,12 +76,15 @@ def run(source, db):
             "products":analytics.products(con,first,last).to_dict("records"),
             "countries":analytics.country_ranking(con,first,last).to_dict("records"),
             "customers":analytics.customers(con,first,last).to_dict("records"),
+            "net_overview":analytics.net_overview(con,first,last),
+            "net_monthly":analytics.net_trend(con,first,last).to_dict('records'),
         }
         inventory=con.execute("""SELECT table_schema, table_name, table_type FROM information_schema.tables
           WHERE table_schema IN ('ods','stg','dim','dwd','dws','ads') ORDER BY table_schema,table_name""").fetchdf()
         inventory["row_count"]=[con.execute(f'SELECT COUNT(*) FROM "{r.table_schema}"."{r.table_name}"').fetchone()[0] for r in inventory.itertuples()]
         metadata={"built_at":datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(),"elapsed_seconds":round(time.perf_counter()-started,2),
           "source_sha256":hashlib.sha256(source.read_bytes()).hexdigest(),"ingest":ingest,"duckdb_version":duckdb.__version__,"tables":inventory.to_dict("records")}
+        export_lineage(target,ROOT/'docs',ROOT)
         con.execute("CHECKPOINT")
         con.close();con=None
         # 先准备所有导出，避免序列化或CSV生成失败时已经替换旧库。
@@ -68,9 +95,11 @@ def run(source, db):
             write_json(staging/"validation.json",validation)
             write_json(staging/"analysis.json",results)
             write_json(staging/"build.json",metadata)
+            write_json(staging/'dbt_results.json',dbt_result)
+            write_json(staging/'net_analysis.json',results['net_overview'])
             inventory.to_csv(staging/"table_inventory.csv",index=False,encoding="utf-8-sig")
             import pandas as pd
-            for key in ["monthly","products","countries","customers"]:
+            for key in ["monthly","products","countries","customers","net_monthly"]:
                 pd.DataFrame(results[key]).to_csv(staging/f"{key}.csv",index=False,encoding="utf-8-sig")
             temp.replace(db)
             for file in staging.iterdir(): file.replace(exports/file.name)

@@ -1,0 +1,247 @@
+{
+  "models": 23,
+  "nodes": [
+    {
+      "name": "retail_raw",
+      "relation": "ods.retail_raw"
+    },
+    {
+      "name": "ads_net_daily",
+      "relation": "ads.net_daily"
+    },
+    {
+      "name": "ads_transaction_cube",
+      "relation": "ads.transaction_cube"
+    },
+    {
+      "name": "ads_transaction_detail",
+      "relation": "ads.transaction_detail"
+    },
+    {
+      "name": "ads_sales_detail",
+      "relation": "ads.sales_detail"
+    },
+    {
+      "name": "ads_customer_daily",
+      "relation": "ads.customer_daily"
+    },
+    {
+      "name": "ads_time_rollup",
+      "relation": "ads.time_rollup"
+    },
+    {
+      "name": "ads_sales_daily",
+      "relation": "ads.sales_daily"
+    },
+    {
+      "name": "ads_product_daily",
+      "relation": "ads.product_daily"
+    },
+    {
+      "name": "ads_overview",
+      "relation": "ads.overview"
+    },
+    {
+      "name": "dws_customer_day_country",
+      "relation": "dws.customer_day_country"
+    },
+    {
+      "name": "dws_product_day_country",
+      "relation": "dws.product_day_country"
+    },
+    {
+      "name": "dws_net_day_country",
+      "relation": "dws.net_day_country"
+    },
+    {
+      "name": "dws_transaction_detail",
+      "relation": "dws.transaction_detail"
+    },
+    {
+      "name": "dws_sales_detail",
+      "relation": "dws.sales_detail"
+    },
+    {
+      "name": "dws_sales_day_country",
+      "relation": "dws.sales_day_country"
+    },
+    {
+      "name": "dim_product",
+      "relation": "dim.product"
+    },
+    {
+      "name": "dim_customer",
+      "relation": "dim.customer"
+    },
+    {
+      "name": "dim_country",
+      "relation": "dim.country"
+    },
+    {
+      "name": "dim_date",
+      "relation": "dim.date"
+    },
+    {
+      "name": "dwd_fact_cancellation",
+      "relation": "dwd.fact_cancellation"
+    },
+    {
+      "name": "dwd_fact_sales",
+      "relation": "dwd.fact_sales"
+    },
+    {
+      "name": "stg_clean_transactions",
+      "relation": "stg.clean_transactions"
+    },
+    {
+      "name": "dwd_fact_transaction",
+      "relation": "dwd.fact_transaction"
+    }
+  ],
+  "edges": [
+    {
+      "from": "dws_net_day_country",
+      "to": "ads_net_daily"
+    },
+    {
+      "from": "dws_transaction_detail",
+      "to": "ads_transaction_cube"
+    },
+    {
+      "from": "dws_transaction_detail",
+      "to": "ads_transaction_detail"
+    },
+    {
+      "from": "dws_sales_detail",
+      "to": "ads_sales_detail"
+    },
+    {
+      "from": "dws_customer_day_country",
+      "to": "ads_customer_daily"
+    },
+    {
+      "from": "dws_transaction_detail",
+      "to": "ads_time_rollup"
+    },
+    {
+      "from": "dws_sales_day_country",
+      "to": "ads_sales_daily"
+    },
+    {
+      "from": "dws_product_day_country",
+      "to": "ads_product_daily"
+    },
+    {
+      "from": "dws_transaction_detail",
+      "to": "ads_overview"
+    },
+    {
+      "from": "dws_sales_detail",
+      "to": "dws_customer_day_country"
+    },
+    {
+      "from": "dws_sales_detail",
+      "to": "dws_product_day_country"
+    },
+    {
+      "from": "dws_transaction_detail",
+      "to": "dws_net_day_country"
+    },
+    {
+      "from": "dwd_fact_sales",
+      "to": "dws_transaction_detail"
+    },
+    {
+      "from": "dwd_fact_cancellation",
+      "to": "dws_transaction_detail"
+    },
+    {
+      "from": "dim_date",
+      "to": "dws_transaction_detail"
+    },
+    {
+      "from": "dim_product",
+      "to": "dws_transaction_detail"
+    },
+    {
+      "from": "dim_customer",
+      "to": "dws_transaction_detail"
+    },
+    {
+      "from": "dim_country",
+      "to": "dws_transaction_detail"
+    },
+    {
+      "from": "dwd_fact_sales",
+      "to": "dws_sales_detail"
+    },
+    {
+      "from": "dim_date",
+      "to": "dws_sales_detail"
+    },
+    {
+      "from": "dim_product",
+      "to": "dws_sales_detail"
+    },
+    {
+      "from": "dim_customer",
+      "to": "dws_sales_detail"
+    },
+    {
+      "from": "dim_country",
+      "to": "dws_sales_detail"
+    },
+    {
+      "from": "dws_sales_detail",
+      "to": "dws_sales_day_country"
+    },
+    {
+      "from": "stg_clean_transactions",
+      "to": "dim_product"
+    },
+    {
+      "from": "stg_clean_transactions",
+      "to": "dim_customer"
+    },
+    {
+      "from": "stg_clean_transactions",
+      "to": "dim_country"
+    },
+    {
+      "from": "stg_clean_transactions",
+      "to": "dim_date"
+    },
+    {
+      "from": "dwd_fact_transaction",
+      "to": "dwd_fact_cancellation"
+    },
+    {
+      "from": "dwd_fact_transaction",
+      "to": "dwd_fact_sales"
+    },
+    {
+      "from": "retail_raw",
+      "to": "stg_clean_transactions"
+    },
+    {
+      "from": "stg_clean_transactions",
+      "to": "dwd_fact_transaction"
+    },
+    {
+      "from": "dim_date",
+      "to": "dwd_fact_transaction"
+    },
+    {
+      "from": "dim_product",
+      "to": "dwd_fact_transaction"
+    },
+    {
+      "from": "dim_customer",
+      "to": "dwd_fact_transaction"
+    },
+    {
+      "from": "dim_country",
+      "to": "dwd_fact_transaction"
+    }
+  ]
+}

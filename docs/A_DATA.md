@@ -31,7 +31,7 @@ ODS还增加`source_row_number`、`source_file`、`source_sha256`。`source_row_
 
 1. `src/download_data.py`下载官方ZIP，只读取已知的Excel成员，写入原始目录并生成来源元数据。原始文件存在时先验证SHA256，不重复下载。
 2. `src/ingest.py`读取首个工作表，校验8个字段，将所有记录写入`ods.retail_raw`。重复运行完整重建ODS，避免追加产生重复导入。
-3. `sql/10_clean.sql`去除标识字段两端空白，空串转换为NULL，数量进行整数有效性检查，日期使用`TRY_CAST`，单价转换为定点小数。
+3. `dbt/models/stg/stg_clean_transactions.sql`去除标识字段两端空白，空串转换为NULL，数量进行整数有效性检查，日期使用`TRY_CAST`，单价转换为定点小数。
 4. 创建`stg.clean_transactions`，记录取消标记、正向销售标记和完全重复后续行标记。此层不删除记录，由后续DWD保存全部事实、ADS按业务口径筛选。
 5. `src/quality.py`扫描数据质量，返回行数、缺失、异常、取消及疑似重复计数，由主流水线输出JSON。
 
@@ -57,7 +57,7 @@ ODS还增加`source_row_number`、`source_file`、`source_sha256`。`source_row_
 
 清洗模块输出`stg.clean_transactions`及质量统计。模型使用来源行号回查ODS，指标模块使用统一的正向交易标记。运行完整流水线后，ODS、STG与DWD行数应一致，所有来源行号唯一；正向销售记录中不能存在取消、数量非正、单价非正或必需字段缺失的行。
 
-检查结果见`data/exports/a_data_verification.json`和`data/exports/quality.json`。
+检查结果见 `data/exports/dbt_results.json`、`data/exports/validation.json` 和 `data/exports/quality.json`。
 
 ## 全量数据实测结果
 
@@ -81,7 +81,7 @@ ODS还增加`source_row_number`、`source_file`、`source_sha256`。`source_row_
 
 最早交易为2010年12月1日08:26，最晚交易为2011年12月9日12:50。2011年12月只覆盖月初至9日，不能直接与完整月份比较。按照保留重复行的正向销售口径，金额为10,666,684.5440英镑；展示时可四舍五入为10,666,684.54英镑，底层计算保留4位小数。
 
-已通过6项全量检查：官方记录数一致、清洗前后行数一致、来源行号唯一、正向销售条件成立、布尔标记无NULL、重复执行清洗SQL的行数及金额一致。
+dbt 数据测试和运行校验核对来源行号、清洗前后行数、维度关联与金额。
 
 ## 大额交易与取消记录核查
 
@@ -95,3 +95,5 @@ ODS还增加`source_row_number`、`source_file`、`source_sha256`。`source_row_
 两行的商品、客户、国家和单价相同，数量互为相反数，时间间隔12分钟。`C581484`按照数据字典属于取消记录；两行带符号金额相加为零。它们高度相关，适合作为业务异常核查案例，但数据没有提供取消单指向原单的显式外键，也没有支付或发货状态，因此不能仅凭字段匹配确认实际履约、退款到账或单据一一对应。
 
 既定指标口径会计入第一行168,469.60英镑，排除第二行负值。这意味着商品排行中的大额表现不能直接解释为已经实现的收入或持续热销。查询SQL、原始来源校验值、两条记录和可复算金额保存在`data/exports/business_caveats.json`。
+
+新增取消分析保留上述第二条记录。在净交易记录口径中，两条事件的金额抵消；正向商品排行仍展示第一条正向记录。

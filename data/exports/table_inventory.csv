@@ -1,15 +1,25 @@
 ﻿table_schema,table_name,table_type,row_count
-ads,customer_daily,VIEW,16763
-ads,product_daily,VIEW,304760
-ads,sales_daily,VIEW,1554
-ads,sales_detail,VIEW,530104
+ads,customer_daily,BASE TABLE,16763
+ads,net_daily,BASE TABLE,1716
+ads,overview,BASE TABLE,1
+ads,product_daily,BASE TABLE,304760
+ads,sales_daily,BASE TABLE,1554
+ads,sales_detail,BASE TABLE,530104
+ads,time_rollup,BASE TABLE,21
+ads,transaction_cube,BASE TABLE,931
+ads,transaction_detail,BASE TABLE,539392
 dim,country,BASE TABLE,39
 dim,customer,BASE TABLE,4373
 dim,date,BASE TABLE,375
 dim,product,BASE TABLE,4071
+dwd,fact_cancellation,BASE TABLE,9288
+dwd,fact_sales,BASE TABLE,530104
 dwd,fact_transaction,BASE TABLE,541909
 dws,customer_day_country,BASE TABLE,16763
+dws,net_day_country,BASE TABLE,1716
 dws,product_day_country,BASE TABLE,304760
 dws,sales_day_country,BASE TABLE,1554
+dws,sales_detail,BASE TABLE,530104
+dws,transaction_detail,BASE TABLE,539392
 ods,retail_raw,BASE TABLE,541909
 stg,clean_transactions,BASE TABLE,541909

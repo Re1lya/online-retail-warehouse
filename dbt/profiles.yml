@@ -1,0 +1,8 @@
+retail_warehouse:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('RETAIL_DBT_PATH', '../data/warehouse/retail.duckdb') }}"
+      schema: main
+      threads: 2

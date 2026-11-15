@@ -1,9 +1,5 @@
--- Rebuild the standardized staging layer without dropping source transactions.
--- Exact duplicates are flagged for review, not automatically deleted: the source
--- has no unique line number with which to distinguish repeated legitimate lines.
-CREATE SCHEMA IF NOT EXISTS stg;
+{{ config(schema='stg', alias='clean_transactions') }}
 
-CREATE OR REPLACE TABLE stg.clean_transactions AS
 WITH normalized AS (
     SELECT source_row_number,
            NULLIF(TRIM(invoice_no), '') AS invoice_no,
@@ -20,7 +16,7 @@ WITH normalized AS (
                             invoice_date, unit_price, customer_id, country
                ORDER BY source_row_number
            ) > 1 AS is_exact_duplicate
-    FROM ods.retail_raw
+    FROM {{ source('raw', 'retail_raw') }}
 ), classified AS (
     SELECT *, COALESCE(UPPER(invoice_no) LIKE 'C%', FALSE) AS is_cancelled
     FROM normalized
@@ -32,4 +28,4 @@ SELECT source_row_number, invoice_no, stock_code, description, quantity, invoice
                 AND NOT is_cancelled, FALSE) AS is_positive_sale,
        is_exact_duplicate
 FROM classified
-ORDER BY source_row_number;
+ORDER BY source_row_number

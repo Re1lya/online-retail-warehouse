@@ -1,0 +1,11 @@
+name: retail_warehouse
+version: '2.0.0'
+config-version: 2
+profile: retail_warehouse
+model-paths: [models]
+test-paths: [tests]
+macro-paths: [macros]
+models:
+  retail_warehouse:
+    +materialized: table
+    +persist_docs: {relation: true, columns: true}

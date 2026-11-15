@@ -24,8 +24,8 @@ def test_filters_match_fact_table_sql(monkeypatch):
     monkeypatch.setenv("RETAIL_DB_PATH", str(DATABASE))
     at = AppTest.from_file(str(ROOT / "app.py"), default_timeout=30).run()
     assert not at.exception
-    assert len(at.metric) == 5
-    assert len(at.tabs) == 3
+    assert len(at.metric) == 9
+    assert len(at.tabs) == 4
     at.date_input(key="date_range").set_value((date(2011, 1, 1), date(2011, 1, 31)))
     at.multiselect(key="country_filter").set_value(["France"])
     at.selectbox(key="trend_grain").set_value("日")
@@ -41,7 +41,7 @@ def test_filters_match_fact_table_sql(monkeypatch):
         """).fetchone()
     expected = [f"£{float(amount):,.2f}", f"{orders:,}", f"{units:,}", f"{customers:,}",
                 f"£{float(amount / Decimal(orders)):,.2f}"]
-    assert [item.value for item in at.metric] == expected
+    assert [item.value for item in at.metric][:5] == expected
 
 
 @pytest.mark.skipif(not DATABASE.exists(), reason="先运行真实数据流水线")

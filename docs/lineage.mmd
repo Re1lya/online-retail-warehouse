@@ -1,0 +1,61 @@
+flowchart LR
+  n23["ods.retail_raw"]
+  n1["ads.net_daily"]
+  n7["ads.transaction_cube"]
+  n8["ads.transaction_detail"]
+  n5["ads.sales_detail"]
+  n0["ads.customer_daily"]
+  n6["ads.time_rollup"]
+  n4["ads.sales_daily"]
+  n3["ads.product_daily"]
+  n2["ads.overview"]
+  n16["dws.customer_day_country"]
+  n18["dws.product_day_country"]
+  n17["dws.net_day_country"]
+  n21["dws.transaction_detail"]
+  n20["dws.sales_detail"]
+  n19["dws.sales_day_country"]
+  n12["dim.product"]
+  n10["dim.customer"]
+  n9["dim.country"]
+  n11["dim.date"]
+  n13["dwd.fact_cancellation"]
+  n14["dwd.fact_sales"]
+  n22["stg.clean_transactions"]
+  n15["dwd.fact_transaction"]
+  n17 --> n1
+  n21 --> n7
+  n21 --> n8
+  n20 --> n5
+  n16 --> n0
+  n21 --> n6
+  n19 --> n4
+  n18 --> n3
+  n21 --> n2
+  n20 --> n16
+  n20 --> n18
+  n21 --> n17
+  n14 --> n21
+  n13 --> n21
+  n11 --> n21
+  n12 --> n21
+  n10 --> n21
+  n9 --> n21
+  n14 --> n20
+  n11 --> n20
+  n12 --> n20
+  n10 --> n20
+  n9 --> n20
+  n20 --> n19
+  n22 --> n12
+  n22 --> n10
+  n22 --> n9
+  n22 --> n11
+  n15 --> n13
+  n15 --> n14
+  n23 --> n22
+  n22 --> n15
+  n11 --> n15
+  n12 --> n15
+  n10 --> n15
+  n9 --> n15

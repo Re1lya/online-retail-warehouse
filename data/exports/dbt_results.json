@@ -1,0 +1,1692 @@
+{
+  "metadata": {
+    "dbt_schema_version": "https://schemas.getdbt.com/dbt/run-results/v6.json",
+    "dbt_version": "1.12.7",
+    "generated_at": "2026-11-15T15:12:29.788780Z",
+    "invocation_id": "2c9f142d-971f-4d37-b0a4-2d2b06de5024",
+    "invocation_started_at": "2026-11-15T15:12:28.307574Z",
+    "env": {}
+  },
+  "results": [
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:28.791438Z",
+          "completed_at": "2026-11-15T15:12:28.800702Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:28.800965Z",
+          "completed_at": "2026-11-15T15:12:28.818399Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.029494047164916992,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.source_not_null_raw_retail_raw_source_row_number.7bbc393f8c",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect source_row_number\nfrom \"retail\".\"ods\".\"retail_raw\"\nwhere source_row_number is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:28.797754Z",
+          "completed_at": "2026-11-15T15:12:28.800826Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:28.801285Z",
+          "completed_at": "2026-11-15T15:12:28.819934Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.032510995864868164,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.source_unique_raw_retail_raw_source_row_number.60c4bb77f5",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    source_row_number as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"ods\".\"retail_raw\"\nwhere source_row_number is not null\ngroup by source_row_number\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:28.827736Z",
+          "completed_at": "2026-11-15T15:12:28.828887Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:28.829002Z",
+          "completed_at": "2026-11-15T15:12:28.985927Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.1585829257965088,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.stg_clean_transactions",
+      "compiled": true,
+      "compiled_code": "\n\nWITH normalized AS (\n    SELECT source_row_number,\n           NULLIF(TRIM(invoice_no), '') AS invoice_no,\n           NULLIF(TRIM(stock_code), '') AS stock_code,\n           NULLIF(TRIM(description), '') AS description,\n           CASE WHEN TRY_CAST(quantity AS DECIMAL(20,4)) = TRUNC(TRY_CAST(quantity AS DECIMAL(20,4)))\n                THEN TRY_CAST(quantity AS BIGINT) END AS quantity,\n           TRY_CAST(invoice_date AS TIMESTAMP) AS invoice_ts,\n           TRY_CAST(unit_price AS DECIMAL(18,4)) AS unit_price,\n           NULLIF(TRIM(customer_id), '') AS customer_id,\n           COALESCE(NULLIF(TRIM(country), ''), '未知国家') AS country,\n           ROW_NUMBER() OVER (\n               PARTITION BY invoice_no, stock_code, description, quantity,\n                            invoice_date, unit_price, customer_id, country\n               ORDER BY source_row_number\n           ) > 1 AS is_exact_duplicate\n    FROM \"retail\".\"ods\".\"retail_raw\"\n), classified AS (\n    SELECT *, COALESCE(UPPER(invoice_no) LIKE 'C%', FALSE) AS is_cancelled\n    FROM normalized\n)\nSELECT source_row_number, invoice_no, stock_code, description, quantity, invoice_ts,\n       unit_price, customer_id, country, is_cancelled,\n       COALESCE(invoice_no IS NOT NULL AND stock_code IS NOT NULL\n                AND invoice_ts IS NOT NULL AND quantity > 0 AND unit_price > 0\n                AND NOT is_cancelled, FALSE) AS is_positive_sale,\n       is_exact_duplicate\nFROM classified\nORDER BY source_row_number",
+      "relation_name": "\"retail\".\"stg\".\"clean_transactions\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:28.988637Z",
+          "completed_at": "2026-11-15T15:12:28.992839Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:28.993069Z",
+          "completed_at": "2026-11-15T15:12:28.996574Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.009195804595947266,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_stg_clean_transactions_source_row_number.9215983e92",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect source_row_number\nfrom \"retail\".\"stg\".\"clean_transactions\"\nwhere source_row_number is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:28.990849Z",
+          "completed_at": "2026-11-15T15:12:28.992964Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:28.993511Z",
+          "completed_at": "2026-11-15T15:12:29.000768Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.012866973876953125,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.unique_stg_clean_transactions_source_row_number.0fefe40bb6",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    source_row_number as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"stg\".\"clean_transactions\"\nwhere source_row_number is not null\ngroup by source_row_number\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.002704Z",
+          "completed_at": "2026-11-15T15:12:29.004558Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.005262Z",
+          "completed_at": "2026-11-15T15:12:29.025402Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.023713111877441406,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dim_country",
+      "compiled": true,
+      "compiled_code": "\n\nWITH countries AS (\n SELECT DISTINCT country FROM \"retail\".\"stg\".\"clean_transactions\" WHERE country <> '未知国家'\n), keyed AS (SELECT row_number() OVER(ORDER BY country) AS country_key,country FROM countries\n UNION ALL SELECT 0,'未知国家')\nSELECT *,country='United Kingdom' AS is_home_market,\n CASE WHEN country='未知国家' THEN '未知' WHEN country='United Kingdom' THEN '本土' ELSE '海外' END AS market_type\nFROM keyed",
+      "relation_name": "\"retail\".\"dim\".\"country\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.003489Z",
+          "completed_at": "2026-11-15T15:12:29.004422Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.004713Z",
+          "completed_at": "2026-11-15T15:12:29.030630Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.02841973304748535,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dim_customer",
+      "compiled": true,
+      "compiled_code": "\n\nWITH stats AS (\n SELECT customer_id,min(invoice_ts::DATE) AS first_transaction_date,\n max(invoice_ts::DATE) AS last_transaction_date,\n min(invoice_ts::DATE) FILTER(WHERE is_positive_sale) AS first_purchase_date,\n max(invoice_ts::DATE) FILTER(WHERE is_positive_sale) AS last_purchase_date,\n count(DISTINCT country) AS observed_country_count\n FROM \"retail\".\"stg\".\"clean_transactions\" WHERE customer_id IS NOT NULL GROUP BY customer_id\n)\nSELECT row_number() OVER(ORDER BY customer_id) AS customer_key,*,false AS is_unknown FROM stats\nUNION ALL SELECT 0,NULL,NULL,NULL,NULL,NULL,0,true",
+      "relation_name": "\"retail\".\"dim\".\"customer\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.027295Z",
+          "completed_at": "2026-11-15T15:12:29.029160Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.029283Z",
+          "completed_at": "2026-11-15T15:12:29.047754Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.020939111709594727,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dim_date",
+      "compiled": true,
+      "compiled_code": "\n\nWITH calendar AS (\n SELECT calendar_date::DATE AS full_date FROM generate_series(\n (SELECT min(invoice_ts::DATE) FROM \"retail\".\"stg\".\"clean_transactions\"),\n (SELECT max(invoice_ts::DATE) FROM \"retail\".\"stg\".\"clean_transactions\"),INTERVAL 1 DAY) t(calendar_date)\n), dates AS (SELECT NULL::DATE AS full_date UNION ALL SELECT full_date FROM calendar)\nSELECT coalesce(strftime(full_date,'%Y%m%d')::INTEGER,0) AS date_key,full_date,\n year(full_date)::INTEGER AS year, quarter(full_date)::INTEGER AS quarter,\n month(full_date)::INTEGER AS month, day(full_date)::INTEGER AS day,\n isodow(full_date)::INTEGER AS iso_weekday, week(full_date)::INTEGER AS iso_week,\n strftime(full_date,'%G')::INTEGER AS iso_year,\n dayname(full_date) AS weekday_name, isodow(full_date) IN (6,7) AS is_weekend,\n date_trunc('month',full_date)::DATE AS month_start,last_day(full_date) AS month_end,\n strftime(full_date,'%Y-%m') AS year_month\nFROM dates",
+      "relation_name": "\"retail\".\"dim\".\"date\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.049639Z",
+          "completed_at": "2026-11-15T15:12:29.056040Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.056265Z",
+          "completed_at": "2026-11-15T15:12:29.060612Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.012234926223754883,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dim_country_country_key.d2a0c2476d",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect country_key\nfrom \"retail\".\"dim\".\"country\"\nwhere country_key is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.061973Z",
+          "completed_at": "2026-11-15T15:12:29.065689Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.065827Z",
+          "completed_at": "2026-11-15T15:12:29.070686Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.010046958923339844,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.unique_dim_country_country_key.b94b904a19",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    country_key as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"dim\".\"country\"\nwhere country_key is not null\ngroup by country_key\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.032306Z",
+          "completed_at": "2026-11-15T15:12:29.033321Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.033430Z",
+          "completed_at": "2026-11-15T15:12:29.077542Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.045881032943725586,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dim_product",
+      "compiled": true,
+      "compiled_code": "\n\nWITH known AS (WITH candidates AS (\n    SELECT trim(stock_code) AS stock_code,\n           nullif(trim(description), '') AS description,\n           row_number() OVER (\n               PARTITION BY trim(stock_code)\n               ORDER BY (nullif(trim(description), '') IS NOT NULL) DESC,\n                        invoice_ts DESC NULLS LAST,\n                        source_row_number DESC\n           ) AS description_rank\n    FROM \"retail\".\"stg\".\"clean_transactions\"\n    WHERE nullif(trim(stock_code), '') IS NOT NULL\n)\nSELECT row_number() OVER (ORDER BY stock_code) AS product_key,\n       stock_code,\n       coalesce(description, '商品名称缺失') AS description\nFROM candidates\nWHERE description_rank = 1) SELECT * FROM known UNION ALL SELECT 0,NULL,'未知商品'",
+      "relation_name": "\"retail\".\"dim\".\"product\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.073360Z",
+          "completed_at": "2026-11-15T15:12:29.076394Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.076536Z",
+          "completed_at": "2026-11-15T15:12:29.083115Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.01072382926940918,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dim_customer_customer_key.c289fe4d1f",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect customer_key\nfrom \"retail\".\"dim\".\"customer\"\nwhere customer_key is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.079195Z",
+          "completed_at": "2026-11-15T15:12:29.081856Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.082006Z",
+          "completed_at": "2026-11-15T15:12:29.087959Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.010083675384521484,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.unique_dim_customer_customer_key.7b0683cc6e",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    customer_key as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"dim\".\"customer\"\nwhere customer_key is not null\ngroup by customer_key\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.085207Z",
+          "completed_at": "2026-11-15T15:12:29.088161Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.088376Z",
+          "completed_at": "2026-11-15T15:12:29.094055Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.009742975234985352,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dim_date_date_key.881d0a31b6",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect date_key\nfrom \"retail\".\"dim\".\"date\"\nwhere date_key is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.090261Z",
+          "completed_at": "2026-11-15T15:12:29.092575Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.092701Z",
+          "completed_at": "2026-11-15T15:12:29.097924Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.008433818817138672,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.unique_dim_date_date_key.0869fd48f9",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    date_key as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"dim\".\"date\"\nwhere date_key is not null\ngroup by date_key\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.095617Z",
+          "completed_at": "2026-11-15T15:12:29.098419Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.098689Z",
+          "completed_at": "2026-11-15T15:12:29.104279Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.009598970413208008,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dim_product_product_key.f0e1d838d3",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect product_key\nfrom \"retail\".\"dim\".\"product\"\nwhere product_key is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.099817Z",
+          "completed_at": "2026-11-15T15:12:29.102332Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.102442Z",
+          "completed_at": "2026-11-15T15:12:29.105767Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.006619930267333984,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.unique_dim_product_product_key.1753236bd0",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    product_key as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"dim\".\"product\"\nwhere product_key is not null\ngroup by product_key\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.107075Z",
+          "completed_at": "2026-11-15T15:12:29.108336Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.108445Z",
+          "completed_at": "2026-11-15T15:12:29.156706Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.05005311965942383,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dwd_fact_transaction",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT t.source_row_number,\n       t.invoice_no,\n       t.invoice_ts,\n       coalesce(d.date_key, 0) AS date_key,\n       coalesce(p.product_key, 0) AS product_key,\n       coalesce(c.customer_key, 0) AS customer_key,\n       coalesce(g.country_key, 0) AS country_key,\n       t.quantity,\n       t.unit_price,\n       CAST(CAST(t.quantity AS DECIMAL(18,0)) * t.unit_price AS DECIMAL(20,4)) AS line_amount,\n       coalesce(t.is_cancelled, false) AS is_cancelled,\n       coalesce(t.is_positive_sale, false) AS is_positive_sale,\n       coalesce(t.is_exact_duplicate, false) AS is_exact_duplicate\nFROM \"retail\".\"stg\".\"clean_transactions\" AS t\nLEFT JOIN \"retail\".\"dim\".\"date\" AS d ON CAST(t.invoice_ts AS DATE) = d.full_date\nLEFT JOIN \"retail\".\"dim\".\"product\" AS p ON nullif(trim(t.stock_code), '') = p.stock_code\nLEFT JOIN \"retail\".\"dim\".\"customer\" AS c ON nullif(trim(t.customer_id), '') = c.customer_id\nLEFT JOIN \"retail\".\"dim\".\"country\" AS g\n    ON coalesce(nullif(trim(t.country), ''), '未知国家') = g.country",
+      "relation_name": "\"retail\".\"dwd\".\"fact_transaction\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.158512Z",
+          "completed_at": "2026-11-15T15:12:29.162760Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.163014Z",
+          "completed_at": "2026-11-15T15:12:29.166909Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.009859800338745117,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dwd_fact_transaction_country_key.ffa6a3fecd",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect country_key\nfrom \"retail\".\"dwd\".\"fact_transaction\"\nwhere country_key is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.160532Z",
+          "completed_at": "2026-11-15T15:12:29.162904Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.163534Z",
+          "completed_at": "2026-11-15T15:12:29.167355Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.00992727279663086,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dwd_fact_transaction_customer_key.0f6a4d71a8",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect customer_key\nfrom \"retail\".\"dwd\".\"fact_transaction\"\nwhere customer_key is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.169416Z",
+          "completed_at": "2026-11-15T15:12:29.173809Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.173930Z",
+          "completed_at": "2026-11-15T15:12:29.177536Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.009596824645996094,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dwd_fact_transaction_date_key.b784943191",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect date_key\nfrom \"retail\".\"dwd\".\"fact_transaction\"\nwhere date_key is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.171757Z",
+          "completed_at": "2026-11-15T15:12:29.174447Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.174564Z",
+          "completed_at": "2026-11-15T15:12:29.178006Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.00944209098815918,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dwd_fact_transaction_product_key.648ae4e8ee",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect product_key\nfrom \"retail\".\"dwd\".\"fact_transaction\"\nwhere product_key is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.180121Z",
+          "completed_at": "2026-11-15T15:12:29.187787Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.187914Z",
+          "completed_at": "2026-11-15T15:12:29.191279Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.012104988098144531,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dwd_fact_transaction_source_row_number.138f50bc71",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect source_row_number\nfrom \"retail\".\"dwd\".\"fact_transaction\"\nwhere source_row_number is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.182731Z",
+          "completed_at": "2026-11-15T15:12:29.188452Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.188574Z",
+          "completed_at": "2026-11-15T15:12:29.193376Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.018339157104492188,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.relationships_dwd_fact_transaction_country_key__country_key___ref_dim_country_.c4c514c821",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nwith child as (\n    select country_key as from_field\n    from \"retail\".\"dwd\".\"fact_transaction\"\n    where country_key is not null\n),\n\nparent as (\n    select country_key as to_field\n    from \"retail\".\"dim\".\"country\"\n)\n\nselect\n    from_field\n\nfrom child\nleft join parent\n    on child.from_field = parent.to_field\n\nwhere parent.to_field is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.199877Z",
+          "completed_at": "2026-11-15T15:12:29.204565Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.204740Z",
+          "completed_at": "2026-11-15T15:12:29.209020Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.009955883026123047,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.relationships_dwd_fact_transaction_date_key__date_key___ref_dim_date_.bc09ad1500",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nwith child as (\n    select date_key as from_field\n    from \"retail\".\"dwd\".\"fact_transaction\"\n    where date_key is not null\n),\n\nparent as (\n    select date_key as to_field\n    from \"retail\".\"dim\".\"date\"\n)\n\nselect\n    from_field\n\nfrom child\nleft join parent\n    on child.from_field = parent.to_field\n\nwhere parent.to_field is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.193509Z",
+          "completed_at": "2026-11-15T15:12:29.198675Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.198937Z",
+          "completed_at": "2026-11-15T15:12:29.208551Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.01698899269104004,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.relationships_dwd_fact_transaction_customer_key__customer_key___ref_dim_customer_.6b2cf79994",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nwith child as (\n    select customer_key as from_field\n    from \"retail\".\"dwd\".\"fact_transaction\"\n    where customer_key is not null\n),\n\nparent as (\n    select customer_key as to_field\n    from \"retail\".\"dim\".\"customer\"\n)\n\nselect\n    from_field\n\nfrom child\nleft join parent\n    on child.from_field = parent.to_field\n\nwhere parent.to_field is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.211254Z",
+          "completed_at": "2026-11-15T15:12:29.218364Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.218896Z",
+          "completed_at": "2026-11-15T15:12:29.224194Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.014001846313476562,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.relationships_dwd_fact_transaction_product_key__product_key___ref_dim_product_.e67ff47317",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nwith child as (\n    select product_key as from_field\n    from \"retail\".\"dwd\".\"fact_transaction\"\n    where product_key is not null\n),\n\nparent as (\n    select product_key as to_field\n    from \"retail\".\"dim\".\"product\"\n)\n\nselect\n    from_field\n\nfrom child\nleft join parent\n    on child.from_field = parent.to_field\n\nwhere parent.to_field is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.216182Z",
+          "completed_at": "2026-11-15T15:12:29.218228Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.218475Z",
+          "completed_at": "2026-11-15T15:12:29.226895Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.016141176223754883,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.unique_dwd_fact_transaction_source_row_number.a7f15af7be",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    source_row_number as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"dwd\".\"fact_transaction\"\nwhere source_row_number is not null\ngroup by source_row_number\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.228803Z",
+          "completed_at": "2026-11-15T15:12:29.230529Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.231602Z",
+          "completed_at": "2026-11-15T15:12:29.249611Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.021497249603271484,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dwd_fact_cancellation",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT *,coalesce(invoice_no IS NOT NULL AND date_key<>0 AND product_key<>0\n AND quantity<0 AND unit_price>0,false) AS is_valid_cancellation\nFROM \"retail\".\"dwd\".\"fact_transaction\" WHERE is_cancelled",
+      "relation_name": "\"retail\".\"dwd\".\"fact_cancellation\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.250840Z",
+          "completed_at": "2026-11-15T15:12:29.251879Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.251993Z",
+          "completed_at": "2026-11-15T15:12:29.255281Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.005048036575317383,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.cancel_row_count",
+      "compiled": true,
+      "compiled_code": "SELECT 1 AS failed WHERE (SELECT count(*) FROM \"retail\".\"dwd\".\"fact_cancellation\")<>(SELECT count(*) FROM \"retail\".\"stg\".\"clean_transactions\" WHERE is_cancelled)",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.256464Z",
+          "completed_at": "2026-11-15T15:12:29.258686Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.258801Z",
+          "completed_at": "2026-11-15T15:12:29.260767Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.004881858825683594,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dwd_fact_cancellation_source_row_number.50600328ec",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect source_row_number\nfrom \"retail\".\"dwd\".\"fact_cancellation\"\nwhere source_row_number is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.261909Z",
+          "completed_at": "2026-11-15T15:12:29.264829Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.264960Z",
+          "completed_at": "2026-11-15T15:12:29.267614Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.0062792301177978516,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.unique_dwd_fact_cancellation_source_row_number.22446fe448",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    source_row_number as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"dwd\".\"fact_cancellation\"\nwhere source_row_number is not null\ngroup by source_row_number\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.229577Z",
+          "completed_at": "2026-11-15T15:12:29.230402Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.230644Z",
+          "completed_at": "2026-11-15T15:12:29.330332Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.10205888748168945,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dwd_fact_sales",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT * FROM \"retail\".\"dwd\".\"fact_transaction\" WHERE is_positive_sale",
+      "relation_name": "\"retail\".\"dwd\".\"fact_sales\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.332851Z",
+          "completed_at": "2026-11-15T15:12:29.335387Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.336020Z",
+          "completed_at": "2026-11-15T15:12:29.339194Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.007935047149658203,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dwd_fact_sales_source_row_number.f9949bf50e",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect source_row_number\nfrom \"retail\".\"dwd\".\"fact_sales\"\nwhere source_row_number is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.331962Z",
+          "completed_at": "2026-11-15T15:12:29.335260Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.335516Z",
+          "completed_at": "2026-11-15T15:12:29.343219Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.012146949768066406,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.cancellation_integrity",
+      "compiled": true,
+      "compiled_code": "SELECT source_row_number FROM \"retail\".\"dwd\".\"fact_cancellation\" WHERE NOT is_cancelled\nUNION ALL SELECT source_row_number FROM \"retail\".\"dwd\".\"fact_sales\" WHERE is_cancelled OR line_amount<=0\nUNION ALL SELECT c.source_row_number FROM \"retail\".\"dwd\".\"fact_cancellation\" c JOIN \"retail\".\"dwd\".\"fact_sales\" s USING(source_row_number)\nUNION ALL SELECT source_row_number FROM \"retail\".\"dwd\".\"fact_cancellation\" WHERE is_valid_cancellation AND (line_amount>=0 OR line_amount IS NULL)",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.340687Z",
+          "completed_at": "2026-11-15T15:12:29.343959Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.344120Z",
+          "completed_at": "2026-11-15T15:12:29.349907Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.01003718376159668,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.unique_dwd_fact_sales_source_row_number.92504de0dc",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    source_row_number as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"dwd\".\"fact_sales\"\nwhere source_row_number is not null\ngroup by source_row_number\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.351833Z",
+          "completed_at": "2026-11-15T15:12:29.354007Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.354238Z",
+          "completed_at": "2026-11-15T15:12:29.441615Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.09046101570129395,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dws_sales_detail",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT f.*,d.full_date AS sales_date,p.stock_code,p.description,c.customer_id,g.country\nFROM \"retail\".\"dwd\".\"fact_sales\" f\nJOIN \"retail\".\"dim\".\"date\" d USING(date_key) JOIN \"retail\".\"dim\".\"product\" p USING(product_key)\nJOIN \"retail\".\"dim\".\"customer\" c USING(customer_key) JOIN \"retail\".\"dim\".\"country\" g USING(country_key)",
+      "relation_name": "\"retail\".\"dws\".\"sales_detail\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.443645Z",
+          "completed_at": "2026-11-15T15:12:29.446781Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.446902Z",
+          "completed_at": "2026-11-15T15:12:29.451291Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.008383035659790039,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dws_sales_detail_source_row_number.e8ee4b0602",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect source_row_number\nfrom \"retail\".\"dws\".\"sales_detail\"\nwhere source_row_number is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.352757Z",
+          "completed_at": "2026-11-15T15:12:29.354113Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.354593Z",
+          "completed_at": "2026-11-15T15:12:29.456070Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.10472989082336426,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dws_transaction_detail",
+      "compiled": true,
+      "compiled_code": "\n\nWITH events AS (\n SELECT source_row_number,invoice_no,date_key,product_key,customer_key,country_key,quantity,line_amount,'sale' AS entry_type FROM \"retail\".\"dwd\".\"fact_sales\"\n UNION ALL\n SELECT source_row_number,invoice_no,date_key,product_key,customer_key,country_key,quantity,line_amount,'cancellation' AS entry_type FROM \"retail\".\"dwd\".\"fact_cancellation\" WHERE is_valid_cancellation\n)\nSELECT f.*,d.full_date AS sales_date,d.year,d.quarter,d.month,d.month_start,\n p.stock_code,p.description,c.customer_id,g.country,g.market_type\nFROM events f JOIN \"retail\".\"dim\".\"date\" d USING(date_key) JOIN \"retail\".\"dim\".\"product\" p USING(product_key)\nJOIN \"retail\".\"dim\".\"customer\" c USING(customer_key) JOIN \"retail\".\"dim\".\"country\" g USING(country_key)",
+      "relation_name": "\"retail\".\"dws\".\"transaction_detail\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.458218Z",
+          "completed_at": "2026-11-15T15:12:29.460724Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.460845Z",
+          "completed_at": "2026-11-15T15:12:29.463545Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.006180763244628906,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.not_null_dws_transaction_detail_source_row_number.5bd064e7cf",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\n\n\nselect source_row_number\nfrom \"retail\".\"dws\".\"transaction_detail\"\nwhere source_row_number is null\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.453236Z",
+          "completed_at": "2026-11-15T15:12:29.456417Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.456586Z",
+          "completed_at": "2026-11-15T15:12:29.467346Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.014921903610229492,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.unique_dws_sales_detail_source_row_number.eeec8fabf9",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    source_row_number as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"dws\".\"sales_detail\"\nwhere source_row_number is not null\ngroup by source_row_number\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.464703Z",
+          "completed_at": "2026-11-15T15:12:29.467638Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.467901Z",
+          "completed_at": "2026-11-15T15:12:29.477839Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.013898134231567383,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.unique_dws_transaction_detail_source_row_number.6940abf39b",
+      "compiled": true,
+      "compiled_code": "\n    \n    \n\nselect\n    source_row_number as unique_field,\n    count(*) as n_records\n\nfrom \"retail\".\"dws\".\"transaction_detail\"\nwhere source_row_number is not null\ngroup by source_row_number\nhaving count(*) > 1\n\n\n",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.479703Z",
+          "completed_at": "2026-11-15T15:12:29.481012Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.481170Z",
+          "completed_at": "2026-11-15T15:12:29.503459Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.024427175521850586,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dws_customer_day_country",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT sales_date, country, customer_key, customer_id,\n       SUM(line_amount) AS sales_amount, SUM(quantity)::BIGINT AS units\nFROM \"retail\".\"dws\".\"sales_detail\" WHERE customer_key <> 0 GROUP BY ALL",
+      "relation_name": "\"retail\".\"dws\".\"customer_day_country\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.469531Z",
+          "completed_at": "2026-11-15T15:12:29.470606Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.470723Z",
+          "completed_at": "2026-11-15T15:12:29.535024Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.06612396240234375,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.ads_sales_detail",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT * FROM \"retail\".\"dws\".\"sales_detail\"",
+      "relation_name": "\"retail\".\"ads\".\"sales_detail\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.536170Z",
+          "completed_at": "2026-11-15T15:12:29.537220Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.537349Z",
+          "completed_at": "2026-11-15T15:12:29.559123Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.023404836654663086,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dws_sales_day_country",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT sales_date, country, SUM(line_amount) AS sales_amount,\n       SUM(quantity)::BIGINT AS units, COUNT(*) AS line_count,\n       COUNT(DISTINCT invoice_no) AS daily_orders,\n       COUNT(DISTINCT CASE WHEN customer_key <> 0 THEN customer_id END) AS daily_customers\nFROM \"retail\".\"dws\".\"sales_detail\" GROUP BY sales_date, country",
+      "relation_name": "\"retail\".\"dws\".\"sales_day_country\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.505576Z",
+          "completed_at": "2026-11-15T15:12:29.506721Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.507091Z",
+          "completed_at": "2026-11-15T15:12:29.559960Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.0550079345703125,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dws_product_day_country",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT sales_date, country, product_key, stock_code, description,\n       SUM(line_amount) AS sales_amount, SUM(quantity)::BIGINT AS units\nFROM \"retail\".\"dws\".\"sales_detail\" GROUP BY ALL",
+      "relation_name": "\"retail\".\"dws\".\"product_day_country\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.561512Z",
+          "completed_at": "2026-11-15T15:12:29.563376Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.563510Z",
+          "completed_at": "2026-11-15T15:12:29.589250Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.02874898910522461,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.ads_overview",
+      "compiled": true,
+      "compiled_code": "\n\nWITH totals AS (SELECT coalesce(sum(line_amount) FILTER(WHERE entry_type='sale'),0)::DECIMAL(20,4) AS sales_amount,\n -coalesce(sum(line_amount) FILTER(WHERE entry_type='cancellation'),0)::DECIMAL(20,4) AS cancellation_amount,\n coalesce(sum(line_amount),0)::DECIMAL(20,4) AS net_recorded_amount,\n count(DISTINCT invoice_no) FILTER(WHERE entry_type='sale') AS order_count,\n count(DISTINCT invoice_no) FILTER(WHERE entry_type='cancellation') AS cancellation_order_count,\n count(DISTINCT customer_id) FILTER(WHERE entry_type='sale') AS customer_count,\n coalesce(sum(quantity) FILTER(WHERE entry_type='sale'),0)::BIGINT AS units,\n -coalesce(sum(quantity) FILTER(WHERE entry_type='cancellation'),0)::BIGINT AS cancellation_units FROM \"retail\".\"dws\".\"transaction_detail\")\nSELECT *,sales_amount/nullif(order_count,0) AS avg_order_value,\n cancellation_amount/nullif(sales_amount,0) AS cancellation_amount_ratio FROM totals",
+      "relation_name": "\"retail\".\"ads\".\"overview\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.562536Z",
+          "completed_at": "2026-11-15T15:12:29.564521Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.564687Z",
+          "completed_at": "2026-11-15T15:12:29.616221Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.05415034294128418,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.ads_time_rollup",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT year,quarter,month,\n grouping_id(year,quarter,month)::INTEGER AS grouping_id,coalesce(sum(line_amount) FILTER(WHERE entry_type='sale'),0)::DECIMAL(20,4) AS sales_amount,\n -coalesce(sum(line_amount) FILTER(WHERE entry_type='cancellation'),0)::DECIMAL(20,4) AS cancellation_amount,\n coalesce(sum(line_amount),0)::DECIMAL(20,4) AS net_recorded_amount,\n count(DISTINCT invoice_no) FILTER(WHERE entry_type='sale') AS order_count,\n count(DISTINCT invoice_no) FILTER(WHERE entry_type='cancellation') AS cancellation_order_count,\n count(DISTINCT customer_id) FILTER(WHERE entry_type='sale') AS customer_count,\n coalesce(sum(quantity) FILTER(WHERE entry_type='sale'),0)::BIGINT AS units,\n -coalesce(sum(quantity) FILTER(WHERE entry_type='cancellation'),0)::BIGINT AS cancellation_units\nFROM \"retail\".\"dws\".\"transaction_detail\" GROUP BY ROLLUP(year,quarter,month)",
+      "relation_name": "\"retail\".\"ads\".\"time_rollup\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.617313Z",
+          "completed_at": "2026-11-15T15:12:29.618479Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.618804Z",
+          "completed_at": "2026-11-15T15:12:29.702455Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.08582186698913574,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.ads_transaction_detail",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT * FROM \"retail\".\"dws\".\"transaction_detail\"",
+      "relation_name": "\"retail\".\"ads\".\"transaction_detail\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.590825Z",
+          "completed_at": "2026-11-15T15:12:29.591979Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.592298Z",
+          "completed_at": "2026-11-15T15:12:29.727755Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.13769102096557617,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.ads_transaction_cube",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT month_start,country,entry_type,\n grouping(month_start)::INTEGER AS month_is_total,grouping(country)::INTEGER AS country_is_total,\n grouping(entry_type)::INTEGER AS type_is_total,grouping_id(month_start,country,entry_type)::INTEGER AS grouping_id,\n coalesce(sum(line_amount) FILTER(WHERE entry_type='sale'),0)::DECIMAL(20,4) AS sales_amount,\n -coalesce(sum(line_amount) FILTER(WHERE entry_type='cancellation'),0)::DECIMAL(20,4) AS cancellation_amount,\n coalesce(sum(line_amount),0)::DECIMAL(20,4) AS net_recorded_amount,\n count(DISTINCT invoice_no) FILTER(WHERE entry_type='sale') AS order_count,\n count(DISTINCT invoice_no) FILTER(WHERE entry_type='cancellation') AS cancellation_order_count,\n count(DISTINCT customer_id) FILTER(WHERE entry_type='sale') AS customer_count,\n coalesce(sum(quantity) FILTER(WHERE entry_type='sale'),0)::BIGINT AS units,\n -coalesce(sum(quantity) FILTER(WHERE entry_type='cancellation'),0)::BIGINT AS cancellation_units\nFROM \"retail\".\"dws\".\"transaction_detail\" GROUP BY CUBE(month_start,country,entry_type)",
+      "relation_name": "\"retail\".\"ads\".\"transaction_cube\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.705296Z",
+          "completed_at": "2026-11-15T15:12:29.706817Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.706965Z",
+          "completed_at": "2026-11-15T15:12:29.736868Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.03270673751831055,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.dws_net_day_country",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT sales_date,country,coalesce(sum(line_amount) FILTER(WHERE entry_type='sale'),0)::DECIMAL(20,4) AS sales_amount,\n -coalesce(sum(line_amount) FILTER(WHERE entry_type='cancellation'),0)::DECIMAL(20,4) AS cancellation_amount,\n coalesce(sum(line_amount),0)::DECIMAL(20,4) AS net_recorded_amount,\n count(DISTINCT invoice_no) FILTER(WHERE entry_type='sale') AS order_count,\n count(DISTINCT invoice_no) FILTER(WHERE entry_type='cancellation') AS cancellation_order_count,\n count(DISTINCT customer_id) FILTER(WHERE entry_type='sale') AS customer_count,\n coalesce(sum(quantity) FILTER(WHERE entry_type='sale'),0)::BIGINT AS units,\n -coalesce(sum(quantity) FILTER(WHERE entry_type='cancellation'),0)::BIGINT AS cancellation_units FROM \"retail\".\"dws\".\"transaction_detail\" GROUP BY sales_date,country",
+      "relation_name": "\"retail\".\"dws\".\"net_day_country\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.730112Z",
+          "completed_at": "2026-11-15T15:12:29.731889Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.732047Z",
+          "completed_at": "2026-11-15T15:12:29.746438Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.016875028610229492,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.ads_customer_daily",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT * FROM \"retail\".\"dws\".\"customer_day_country\"",
+      "relation_name": "\"retail\".\"ads\".\"customer_daily\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.739793Z",
+          "completed_at": "2026-11-15T15:12:29.741451Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.741677Z",
+          "completed_at": "2026-11-15T15:12:29.752611Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.014033317565917969,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.ads_sales_daily",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT * FROM \"retail\".\"dws\".\"sales_day_country\"",
+      "relation_name": "\"retail\".\"ads\".\"sales_daily\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.754001Z",
+          "completed_at": "2026-11-15T15:12:29.755214Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.755320Z",
+          "completed_at": "2026-11-15T15:12:29.765184Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.011806964874267578,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.grain_and_amounts",
+      "compiled": true,
+      "compiled_code": "WITH amounts AS (\n SELECT (SELECT count(*) FROM \"retail\".\"dwd\".\"fact_transaction\") AS facts,\n (SELECT count(*) FROM \"retail\".\"ods\".\"retail_raw\") AS raw,\n (SELECT coalesce(sum(quantity*unit_price),0) FROM \"retail\".\"stg\".\"clean_transactions\" WHERE is_positive_sale) AS expected_sales,\n (SELECT coalesce(sum(line_amount),0) FROM \"retail\".\"dwd\".\"fact_sales\") AS actual_sales,\n (SELECT coalesce(sum(sales_amount),0) FROM \"retail\".\"dws\".\"sales_day_country\") AS daily_sales,\n (SELECT coalesce(sum(sales_amount),0) FROM \"retail\".\"dws\".\"product_day_country\") AS product_sales,\n (SELECT coalesce(sum(line_amount),0) FROM \"retail\".\"dwd\".\"fact_sales\" WHERE customer_key<>0) AS known_sales,\n (SELECT coalesce(sum(sales_amount),0) FROM \"retail\".\"dws\".\"customer_day_country\") AS customer_sales\n) SELECT * FROM amounts WHERE facts<>raw OR expected_sales<>actual_sales OR actual_sales<>daily_sales OR actual_sales<>product_sales OR known_sales<>customer_sales",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "pass",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.766454Z",
+          "completed_at": "2026-11-15T15:12:29.767627Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.767749Z",
+          "completed_at": "2026-11-15T15:12:29.771559Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.0057659149169921875,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": null,
+      "failures": 0,
+      "unique_id": "test.retail_warehouse.cube_and_net_reconcile",
+      "compiled": true,
+      "compiled_code": "WITH totals AS (\n SELECT sales_amount,cancellation_amount,net_recorded_amount,order_count,customer_count FROM \"retail\".\"ads\".\"overview\"\n), results AS (\n SELECT 'cube' AS source,sales_amount,cancellation_amount,net_recorded_amount,order_count,customer_count FROM \"retail\".\"ads\".\"transaction_cube\" WHERE grouping_id=7\n UNION ALL SELECT 'rollup',sales_amount,cancellation_amount,net_recorded_amount,order_count,customer_count FROM \"retail\".\"ads\".\"time_rollup\" WHERE grouping_id=7\n) SELECT r.* FROM results r CROSS JOIN totals t WHERE r.sales_amount<>t.sales_amount OR r.cancellation_amount<>t.cancellation_amount\n OR r.net_recorded_amount<>t.net_recorded_amount OR r.order_count<>t.order_count OR r.customer_count<>t.customer_count\n UNION ALL SELECT 'net',sales_amount,cancellation_amount,net_recorded_amount,order_count,customer_count FROM totals WHERE net_recorded_amount<>sales_amount-cancellation_amount",
+      "relation_name": null,
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.772829Z",
+          "completed_at": "2026-11-15T15:12:29.773713Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.773818Z",
+          "completed_at": "2026-11-15T15:12:29.781327Z"
+        }
+      ],
+      "thread_id": "Thread-1 (worker)",
+      "execution_time": 0.008939027786254883,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.ads_net_daily",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT * FROM \"retail\".\"dws\".\"net_day_country\"",
+      "relation_name": "\"retail\".\"ads\".\"net_daily\"",
+      "batch_results": null,
+      "overload_results": null
+    },
+    {
+      "status": "success",
+      "timing": [
+        {
+          "name": "compile",
+          "started_at": "2026-11-15T15:12:29.748893Z",
+          "completed_at": "2026-11-15T15:12:29.749938Z"
+        },
+        {
+          "name": "execute",
+          "started_at": "2026-11-15T15:12:29.750163Z",
+          "completed_at": "2026-11-15T15:12:29.786373Z"
+        }
+      ],
+      "thread_id": "Thread-2 (worker)",
+      "execution_time": 0.038375139236450195,
+      "adapter_response": {
+        "_message": "OK"
+      },
+      "message": "OK",
+      "failures": null,
+      "unique_id": "model.retail_warehouse.ads_product_daily",
+      "compiled": true,
+      "compiled_code": "\n\nSELECT * FROM \"retail\".\"dws\".\"product_day_country\"",
+      "relation_name": "\"retail\".\"ads\".\"product_daily\"",
+      "batch_results": null,
+      "overload_results": null
+    }
+  ],
+  "elapsed_time": 1.1038010120391846,
+  "args": {
+    "log_format_file": "debug",
+    "state_modified_compare_vars": false,
+    "snowflake_projects_otel": false,
+    "show": false,
+    "use_colors_file": true,
+    "show_resource_report": false,
+    "require_batched_execution_for_custom_microbatch_strategy": true,
+    "log_level": "info",
+    "allow_jinja_file_extensions": false,
+    "resource_types": [],
+    "empty": false,
+    "require_unique_project_resource_names": false,
+    "introspect": true,
+    "select": [],
+    "write_json": true,
+    "populate_cache": true,
+    "quiet": false,
+    "exclude": [],
+    "cache_selected_only": false,
+    "favor_state": false,
+    "use_colors": true,
+    "log_path": "./dbt/target/logs",
+    "indirect_selection": "eager",
+    "source_freshness_run_project_hooks": true,
+    "defer": false,
+    "send_anonymous_usage_stats": false,
+    "log_level_file": "debug",
+    "require_sql_header_in_test_configs": false,
+    "enable_grouped_warn_error_parser_logs": false,
+    "partial_parse": true,
+    "require_all_warnings_handled_by_warn_error": true,
+    "require_generic_test_arguments_property": true,
+    "require_yaml_configuration_for_mf_time_spines": true,
+    "project_dir": "./dbt",
+    "hints_enabled": true,
+    "upload_to_artifacts_ingest_api": false,
+    "builtin_macros_prefer_overrides": false,
+    "include_saved_query": false,
+    "latest_version_pointer_enabled_by_default": false,
+    "use_v2_parser": false,
+    "state_modified_compare_more_unrendered_values": true,
+    "which": "build",
+    "skip_nodes_if_on_run_start_fails": true,
+    "partial_parse_file_diff": true,
+    "invocation_command": "dbt build --project-dir ./dbt --profiles-dir ./dbt --target-path ./dbt/target --log-path ./dbt/target/logs",
+    "require_source_and_semantic_model_names_without_spaces": false,
+    "log_file_max_bytes": 10485760,
+    "exclude_resource_types": [],
+    "profiles_dir": "./dbt",
+    "require_nested_cumulative_type_params": true,
+    "static_parser": true,
+    "vars": {},
+    "require_valid_schema_from_generate_schema_name": false,
+    "target_path": "./dbt/target",
+    "validate_macro_args": true,
+    "version_check": true,
+    "export_saved_queries": false,
+    "sqlparse": {
+      "MAX_GROUPING_DEPTH": null,
+      "MAX_GROUPING_TOKENS": null
+    },
+    "use_fast_test_edges": false,
+    "log_format": "default",
+    "print": true,
+    "macro_debugging": false,
+    "printer_width": 80,
+    "warn_error_options": {
+      "error": [],
+      "warn": [],
+      "silence": []
+    },
+    "use_catalogs_v2": false,
+    "require_ref_searches_node_package_before_root": false,
+    "require_corrected_analysis_fqns": false,
+    "maximum_seed_size_mib": 1,
+    "v2_parser": "dbt-core-experimental-parser parse",
+    "support_custom_ref_kwargs": false,
+    "require_explicit_package_overrides_for_builtin_materializations": true,
+    "require_resource_names_without_spaces": true,
+    "strict_mode": false,
+    "show_all_deprecations": false
+  }
+}

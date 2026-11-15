@@ -79,6 +79,9 @@ def configure(font: str) -> None:
 def save(fig, output: Path, name: str) -> None:
     for extension in ("png", "svg"):
         fig.savefig(output / f"{name}.{extension}", dpi=220, bbox_inches="tight", pad_inches=0.18)
+        if extension == 'svg':
+            path=output / f'{name}.{extension}'
+            path.write_text('\n'.join(line.rstrip() for line in path.read_text().splitlines())+'\n')
     plt.close(fig)
 
 
@@ -194,12 +197,12 @@ def arrow(ax, start, end, label=None, label_offset=(0, 0)):
 
 
 def concept_chart(output: Path) -> None:
-    fig, ax = diagram_canvas("概念设计：围绕销售交易分析", "一条事实对应一条来源交易记录；单据可包含多条商品或业务项目明细", height=5.8)
-    box(ax, .35, .32, .30, .30, "交易明细", "单据编号 · 时间\n数量 · 单价 · 金额", fill=PALE, size=14, title_size=16)
-    box(ax, .02, .66, .25, .24, "日期", "年 · 季度 · 月 · 日")
+    fig, ax = diagram_canvas("概念设计：销售与取消两个业务过程", "一条事实对应一条来源交易记录；单据可包含多条商品或业务项目明细", height=5.8)
+    box(ax, .35, .32, .30, .30, "销售 / 取消明细", "单据编号 · 事件时间\n数量 · 单价 · 金额", fill=PALE, size=14, title_size=16)
+    box(ax, .02, .66, .25, .24, "日期", "年 · 季度 · 月 · 日\nISO周 · 周末")
     box(ax, .73, .66, .25, .24, "商品与业务项目", "代码 · 名称")
-    box(ax, .02, .09, .25, .24, "客户", "原始客户编号\n未知客户保留交易")
-    box(ax, .73, .09, .25, .24, "国家", "交易记录中的\n客户所在国家")
+    box(ax, .02, .09, .25, .24, "客户", "编号 · 首末次日期\n跨国家数 · 未知标记")
+    box(ax, .73, .09, .25, .24, "国家", "源国家名称\n本土 / 海外 / 未知")
     arrow(ax, (.27, .72), (.35, .57), "1 : N", (-.02, .025))
     arrow(ax, (.73, .72), (.65, .57), "1 : N", (.02, .025))
     arrow(ax, (.27, .24), (.35, .37), "1 : N", (-.025, -.025))
@@ -209,32 +212,30 @@ def concept_chart(output: Path) -> None:
 
 
 def star_chart(output: Path) -> None:
-    fig, ax = diagram_canvas("逻辑设计：四维星型模型", "PK 主键；FK 逻辑外键；所有维度均有 key = 0 的未知成员", height=6.2)
-    box(ax, .32, .12, .36, .78, "dwd.fact_transaction",
-        "PK source_row_number\ninvoice_no · invoice_ts\nFK date_key\nFK product_key\nFK customer_key\nFK country_key\nquantity · unit_price\nline_amount\n三类质量与交易标记", fill=PALE, size=11.5, title_size=12.5)
-    box(ax, .01, .65, .25, .24, "dim.date", "PK date_key\nfull_date\nyear / quarter / month / day", size=10.5, title_size=12)
-    box(ax, .74, .65, .25, .24, "dim.product", "PK product_key\nstock_code\ndescription", size=11.2, title_size=12)
-    box(ax, .01, .16, .25, .23, "dim.customer", "PK customer_key\ncustomer_id", size=11.2, title_size=12)
-    box(ax, .74, .16, .25, .23, "dim.country", "PK country_key\ncountry", size=11.2, title_size=12)
-    arrow(ax, (.26, .75), (.32, .70))
-    arrow(ax, (.74, .75), (.68, .65))
-    arrow(ax, (.26, .27), (.32, .55))
-    arrow(ax, (.74, .27), (.68, .50))
-    fig.text(.04, .025, "粒度：来源交易明细行。金额采用 DECIMAL；全部来源行保留，可追溯至原始 Excel。", fontsize=10.5, color=MUTED)
-    save(fig, output, "star_schema")
+    fig, ax = diagram_canvas("逻辑设计：共享维度与业务事实", "逻辑键唯一性、非空和关联由 dbt 数据测试验证", height=6.2)
+    box(ax, .32, .64, .36, .25, "dwd.fact_transaction", "全部来源记录 · 原始行粒度\n来源行号 · 单据 · 四个维度键\n数量 · 单价 · 金额 · 质量标记", fill=PALE, size=11, title_size=12)
+    box(ax, .32, .34, .36, .21, "dwd.fact_sales", "有效正向来源记录\n来源行号 · 共享维度键 · 度量", fill=PALE,size=11,title_size=12)
+    box(ax, .32, .04, .36, .21, "dwd.fact_cancellation", "C开头来源记录\n共享维度键 · 有效取消标记", fill=PALE,size=11,title_size=12)
+    box(ax, .01, .64, .25, .25, "dim.date", "日期键 · 连续日历\n年 / 季度 / 月 / 日\nISO周 · 月首月末", size=10.5,title_size=12)
+    box(ax, .74, .64, .25, .25, "dim.product", "商品键 · 源代码\n最新非空描述",size=11,title_size=12)
+    box(ax, .01, .19, .25, .27, "dim.customer", "客户键 · 客户编号\n首末次交易 / 购买日\n观察到的国家数", size=10.5,title_size=12)
+    box(ax, .74, .19, .25, .27, "dim.country", "国家键 · 源国家\n本土 / 海外 / 未知",size=11,title_size=12)
+    for start,end in [((.26,.76),(.32,.76)),((.74,.76),(.68,.76)),((.26,.36),(.32,.76)),((.74,.36),(.68,.76)),((.50,.64),(.50,.55)),((.68,.70),(.71,.15)),((.71,.15),(.68,.15))]:arrow(ax,start,end)
+    fig.text(.04,.025,"两类业务事实均由原始事实筛选，使用相同维度；分析时合并事件，不做事实表之间的多对多连接。",fontsize=10,color=MUTED)
+    save(fig,output,"star_schema")
 
 
 def architecture_chart(output: Path) -> None:
-    fig, ax = diagram_canvas("系统架构：离线分层计算与分析", "Python 负责导入与编排，DuckDB SQL 负责分层计算，Streamlit 展示结果", height=6.8)
+    fig, ax = diagram_canvas("系统架构：离线分层计算与分析", "Python 导入，dbt 管理分层 SQL、测试与血缘，DuckDB 存储，Streamlit 展示", height=6.8)
     center_x, width, height = .43, .53, .092
     steps = [
         (.875, "真实源数据", "UCI Online Retail.xlsx"),
         (.745, "ODS 原始层", "原始字段 + 来源行号 + 文件哈希"),
         (.615, "STG 清洗层", "类型规范 · 取消与异常标记"),
-        (.485, "DWD 交易明细层", "关联四个维度，保留全部来源行"),
-        (.355, "DWS 主题汇总层", "日国家 · 日商品国家 · 日客户国家"),
-        (.225, "ADS 应用层", "稳定查询接口 + 跨期订单与客户去重"),
-        (.095, "Streamlit 分析看板", "概览 · 商品与业务项目 · 国家与客户"),
+        (.485, "DWD 交易明细层", "原始事实 · 销售事实 · 取消事实"),
+        (.355, "DWS 主题汇总层", "销售与取消事件 · 日主题汇总"),
+        (.225, "ADS 应用层", "应用结果表 · CUBE / ROLLUP"),
+        (.095, "Streamlit 分析看板", "销售 · 商品 · 市场客户 · 取消与多维"),
     ]
     for i, (y, title, body) in enumerate(steps):
         box(ax, center_x, y, width, height, "", None, fill=PALE if i in (3, 5, 6) else "white", title_size=12)
@@ -251,6 +252,17 @@ def architecture_chart(output: Path) -> None:
     ax.text(.17, .30, "验证通过后发布数据库\n构建失败保留旧库", ha="center", va="top", fontsize=11.8, color=MUTED, linespacing=1.7)
     fig.text(.04, .025, "主流程：ODS → STG → DWD → DWS → ADS；DIM 为共享维度层。", fontsize=11, color=MUTED)
     save(fig, output, "layer_architecture")
+
+
+def net_chart(data,output):
+    months=[x['period'][:7] for x in data['net_monthly']]
+    fig,ax=plt.subplots(figsize=(12,4.8))
+    for key,label,color in [('sales_amount','正向交易金额',BLUE),('net_recorded_amount','净交易记录金额',TEAL),('cancellation_amount','取消记录金额','#bb6946')]:
+        ax.plot(months,[float(x[key])/10000 for x in data['net_monthly']],marker='o',label=label,color=color,linewidth=2)
+    ax.set_ylabel('金额（万英镑）');ax.tick_params(axis='x',rotation=35);ax.legend(frameon=False)
+    ax.set_title('销售、取消与净交易记录金额',loc='left',pad=18,fontweight='bold');clean_axes(ax);ax.grid(axis='y',color=GRID)
+    fig.text(.06,.005,'按各记录发生日期统计；2011年12月仅覆盖1日至9日。',fontsize=10,color=MUTED)
+    fig.tight_layout(rect=(0,.04,1,1));save(fig,output,'net_monthly')
 
 
 def main() -> None:
@@ -270,7 +282,8 @@ def main() -> None:
     concept_chart(args.output)
     star_chart(args.output)
     architecture_chart(args.output)
-    print(f"已生成5组 PNG/SVG 图，字体：{font}，目录：{args.output}")
+    net_chart(data,args.output)
+    print(f"已生成6组 PNG/SVG 图，字体：{font}，目录：{args.output}")
 
 
 if __name__ == "__main__":
