@@ -1,0 +1,111 @@
+{
+  "purpose": "原始数据业务异常核查；保持既定指标筛选规则不变。",
+  "database": "data/warehouse/retail.duckdb",
+  "source": "https://archive.ics.uci.edu/dataset/352/online%2Bretail",
+  "query_sql": "SELECT s.source_row_number, s.invoice_no, s.stock_code, s.description,\n       s.quantity, s.invoice_ts, s.unit_price,\n       CAST(s.quantity * s.unit_price AS DECIMAL(20,4)) AS line_amount,\n       s.customer_id, s.country, s.is_cancelled, s.is_positive_sale,\n       r.source_file, r.source_sha256\nFROM stg.clean_transactions s JOIN ods.retail_raw r USING(source_row_number)\nWHERE s.stock_code = '23843'\nORDER BY s.invoice_ts, s.source_row_number",
+  "stock_23843_records": [
+    {
+      "source_row_number": 540423,
+      "invoice_no": "581483",
+      "stock_code": "23843",
+      "description": "PAPER CRAFT , LITTLE BIRDIE",
+      "quantity": 80995,
+      "invoice_ts": "2011-12-09 09:15:00",
+      "unit_price": "2.0800",
+      "line_amount": "168469.6000",
+      "customer_id": "16446",
+      "country": "United Kingdom",
+      "is_cancelled": false,
+      "is_positive_sale": true,
+      "source_file": "Online Retail.xlsx",
+      "source_sha256": "43465a06f2ccf7c8b5bd2892bc7defb52f97487934fe93b16ae4c3936424676d"
+    },
+    {
+      "source_row_number": 540424,
+      "invoice_no": "C581484",
+      "stock_code": "23843",
+      "description": "PAPER CRAFT , LITTLE BIRDIE",
+      "quantity": -80995,
+      "invoice_ts": "2011-12-09 09:27:00",
+      "unit_price": "2.0800",
+      "line_amount": "-168469.6000",
+      "customer_id": "16446",
+      "country": "United Kingdom",
+      "is_cancelled": true,
+      "is_positive_sale": false,
+      "source_file": "Online Retail.xlsx",
+      "source_sha256": "43465a06f2ccf7c8b5bd2892bc7defb52f97487934fe93b16ae4c3936424676d"
+    }
+  ],
+  "verified_arithmetic": {
+    "positive_amount_gbp": "168469.6000",
+    "cancellation_amount_gbp": "-168469.6000",
+    "signed_sum_of_these_two_rows_gbp": "0.0000",
+    "time_gap_minutes": 12,
+    "positive_total_all_records_gbp": "10666684.5440",
+    "positive_row_share_of_total_percent": "1.579399852925846496281272233"
+  },
+  "evidence": [
+    "23843在数据中仅有两行：单据581483和取消单据C581484。",
+    "两行客户编号16446、商品编码23843、国家United Kingdom、单价2.08英镑相同，数量分别为80995和-80995。",
+    "正向记录时间2011-12-09 09:15，取消记录时间同日09:27，间隔12分钟。",
+    "两行带符号金额之和为0，但该算术事实不构成数据集提供了原单与取消单的显式关联。"
+  ],
+  "interpretation": {
+    "supported": "大额正向行有高度相关的取消记录，应作为异常交易核查案例；榜单可展示正向记录规模，但不能据此认定真实履约或稳定商品需求。",
+    "not_established": "数据没有取消单指向原单的外键、支付、发货或履约状态，不能仅凭字段匹配确认实际履约、退款到账或订单一一对应。",
+    "metric_effect": "现有口径计入正向168469.6000英镑，排除取消负值，因此不能把正向交易金额称为净收入。",
+    "rule_change": "未改动is_positive_sale定义；该核查属于业务解释与局限披露。"
+  },
+  "non_merchandise_positive_items": [
+    {
+      "stock_code": "DOT",
+      "example_description": "DOTCOM POSTAGE",
+      "rows": 706,
+      "amount": "206248.7700"
+    },
+    {
+      "stock_code": "M",
+      "example_description": "Manual",
+      "rows": 321,
+      "amount": "78110.2700"
+    },
+    {
+      "stock_code": "POST",
+      "example_description": "POSTAGE",
+      "rows": 1126,
+      "amount": "78101.8800"
+    },
+    {
+      "stock_code": "AMAZONFEE",
+      "example_description": "AMAZON FEE",
+      "rows": 2,
+      "amount": "13761.0900"
+    },
+    {
+      "stock_code": "B",
+      "example_description": "Adjust bad debt",
+      "rows": 1,
+      "amount": "11062.0600"
+    },
+    {
+      "stock_code": "C2",
+      "example_description": "CARRIAGE",
+      "rows": 141,
+      "amount": "7051.0000"
+    },
+    {
+      "stock_code": "BANK CHARGES",
+      "example_description": "Bank Charges",
+      "rows": 12,
+      "amount": "165.0010"
+    },
+    {
+      "stock_code": "m",
+      "example_description": "Manual",
+      "rows": 1,
+      "amount": "2.5500"
+    }
+  ],
+  "non_merchandise_note": "列表仅列出明确可识别的若干业务项目，不是完整业务分类规则。正向金额包含邮资、手工及调整项目；非净收入。"
+}

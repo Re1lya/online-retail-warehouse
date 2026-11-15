@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "ODS与DWD行数守恒",
+      "actual": "541909",
+      "expected": "541909",
+      "passed": true
+    },
+    {
+      "name": "事实表来源行号唯一",
+      "actual": "541909",
+      "expected": "541909",
+      "passed": true
+    },
+    {
+      "name": "date维度关联完整",
+      "actual": "0",
+      "expected": "0",
+      "passed": true
+    },
+    {
+      "name": "product维度关联完整",
+      "actual": "0",
+      "expected": "0",
+      "passed": true
+    },
+    {
+      "name": "customer维度关联完整",
+      "actual": "0",
+      "expected": "0",
+      "passed": true
+    },
+    {
+      "name": "country维度关联完整",
+      "actual": "0",
+      "expected": "0",
+      "passed": true
+    },
+    {
+      "name": "DWD正向销售额",
+      "actual": "10666684.5440",
+      "expected": "10666684.5440",
+      "passed": true
+    },
+    {
+      "name": "dws.sales_day_country金额守恒",
+      "actual": "10666684.5440",
+      "expected": "10666684.5440",
+      "passed": true
+    },
+    {
+      "name": "dws.product_day_country金额守恒",
+      "actual": "10666684.5440",
+      "expected": "10666684.5440",
+      "passed": true
+    },
+    {
+      "name": "已知客户汇总金额守恒",
+      "actual": "8911407.9040",
+      "expected": "8911407.9040",
+      "passed": true
+    },
+    {
+      "name": "取消记录未计入正向销售",
+      "actual": "0",
+      "expected": "0",
+      "passed": true
+    },
+    {
+      "name": "正向销售明细金额均为正",
+      "actual": "0",
+      "expected": "0",
+      "passed": true
+    },
+    {
+      "name": "ADS与STG正向记录数相同",
+      "actual": "530104",
+      "expected": "530104",
+      "passed": true
+    }
+  ]
+}

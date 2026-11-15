@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.building.duckdb
+*.wal
+.DS_Store
+
+# Local credentials and editor files
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+.idea/
+.vscode/

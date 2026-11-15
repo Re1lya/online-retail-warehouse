@@ -1,0 +1,41 @@
+erDiagram
+    DIM_DATE ||--o{ DWD_FACT_TRANSACTION : date_key
+    DIM_PRODUCT ||--o{ DWD_FACT_TRANSACTION : product_key
+    DIM_CUSTOMER ||--o{ DWD_FACT_TRANSACTION : customer_key
+    DIM_COUNTRY ||--o{ DWD_FACT_TRANSACTION : country_key
+    DIM_DATE {
+        INTEGER date_key PK
+        DATE full_date UK
+        INTEGER year
+        INTEGER quarter
+        INTEGER month
+        INTEGER day
+    }
+    DIM_PRODUCT {
+        BIGINT product_key PK
+        VARCHAR stock_code UK
+        VARCHAR description
+    }
+    DIM_CUSTOMER {
+        BIGINT customer_key PK
+        VARCHAR customer_id UK
+    }
+    DIM_COUNTRY {
+        BIGINT country_key PK
+        VARCHAR country UK
+    }
+    DWD_FACT_TRANSACTION {
+        BIGINT source_row_number PK
+        VARCHAR invoice_no
+        TIMESTAMP invoice_ts
+        INTEGER date_key FK
+        BIGINT product_key FK
+        BIGINT customer_key FK
+        BIGINT country_key FK
+        BIGINT quantity
+        DECIMAL unit_price
+        DECIMAL line_amount
+        BOOLEAN is_cancelled
+        BOOLEAN is_positive_sale
+        BOOLEAN is_exact_duplicate
+    }
